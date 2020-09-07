@@ -1,0 +1,127 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+}
+
+.navbar-dark {
+  background-color: #1e90ff;
+}
+
+.navbar-brand {
+  color: #fff;
+  width: auto;
+}
+
+#img-logo {
+  background: url("../images/ecourt-logo.png") no-repeat;
+  width: 120px;
+  height: 120px;
+}
+
+.navbar-brand a h1 {
+  color: #fff;
+}
+
+.navbar-brand h1, .navbar-brand p {
+  margin: 0px 0px 0px 130px;
+}
+
+.navbar-brand p {
+  font-size: 0.8em;
+}
+
+.navbar-brand a.link-text:hover {
+  text-decoration: none;
+}
+
+#navbar {
+  margin-left: 20px;
+}
+
+#court-navbar .nav-link {
+  color: #fff;
+  padding: 0px 14px;
+  font-size: 1.2em;
+}
+
+#court-pic-div {
+  position: relative;
+}
+
+#court-pic-div, .court-pic img {
+  width: 100%;
+  height: 530px;
+  opacity: 0.9;
+}
+
+ .card {
+  width: 18rem;
+  height: auto;
+  border-bottom: 2px solid pink;
+  position: absolute;
+  left: 20%;
+  bottom: -150px;
+  border: 2px solid green;
+}
+
+.card .fas {
+  font-size: 2em;
+  text-align: center;
+  padding: 20px;
+}
+
+.card-title {
+  text-align: center;
+  padding: 10px;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.card-text {
+  font-style: 1.1em;
+}
+
+/* Large Devices */
+@media (min-width: 1200px) {
+
+}
+
+/* Medium Devices */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+}
+
+/* Small Devices */
+@media (min-width: 768px) and (max-width: 991px) {
+  .nav-item {
+    text-align: center;
+    padding: 10px;
+  }
+}
+
+/* Extra Small Devices */
+@media (max-width: 767px) {
+  .nav-item {
+    text-align: center;
+    padding: 10px;
+  }
+
+  /* .navbar-brand {
+    width: 80px;
+  } */
+
+  #img-logo {
+    display: none;
+  }
+
+  .navbar-brand h1, .navbar-brand p {
+    margin: 0px;
+  }
+
+  .court-pic img {
+    height: 250px;
+  }
+}

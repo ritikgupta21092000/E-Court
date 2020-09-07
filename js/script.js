@@ -7,7 +7,7 @@
   }
 
   function showLoadingSpinner() {
-    var html = "<div class='text-center'><img src='../images/ajax-loader.gif'></div>";
+    var html = "<div class='text-center'><img src='./images/ajax-loader.gif'></div>";
     insertHtml("#main-content", html);
   }
 

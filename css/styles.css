@@ -114,6 +114,95 @@ body {
   font-style: 1.1em;
 }
 
+.information {
+  margin-top: 300px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 5px 10px 18px #888888;
+}
+
+.information h1 {
+  font-weight: bold;
+}
+
+.information p {
+  padding: 20px;
+  margin-left: 15px;
+  border-bottom: 1px solid pink;
+}
+
+.information img {
+  width: 100%;
+}
+
+#info-content {
+  padding: 20px;
+}
+
+#info-content span {
+  display: inline;
+  margin-right: 15px;
+  box-shadow: 5px 10px 28px #888888;
+  font-size: 1.3em;
+  padding: 5px;
+}
+
+.inner-content {
+  display: inline-block;
+  margin-left: 15px;
+  margin-top: -30px;
+}
+
+#info-content h4 {
+  /* display: inline-block; */
+  margin-left: 35px;
+}
+
+.small-info {
+  margin-left: 15px;
+  margin-top: -20px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.download-section {
+  margin-top: 50px;
+  background-color: #1e90ff;
+  height: 250px;
+}
+
+.download-section h1 {
+  text-align: center;
+  padding: 30px;
+  color: #fff;
+}
+
+.download-button {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.download-button button {
+  margin-right: 20px;
+}
+
+footer {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.footer-icon i {
+  /* padding: 20px; */
+  margin-right: 20px;
+  font-size: 1.5em;
+}
+
+.copyright {
+  margin-top: 10px;
+  font-size: 1.3em;
+}
+
 /* Large Devices */
 @media (min-width: 1200px) {
 
@@ -169,6 +258,23 @@ body {
   }
 
   .col-12 {
+    margin-top: 20px;
+  }
+
+  .information {
+    margin-top: 800px;
+  }
+
+  .information img {
+    height: 200px;
+  }
+
+  .download-section {
+    height: 500px;
+    width: 100%;
+  }
+
+  .download-section button {
     margin-top: 20px;
   }
 }

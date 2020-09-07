@@ -10,18 +10,18 @@
   <script src="https://kit.fontawesome.com/5130183192.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="./css/styles.css" />
 
-  
+
 </head>
 
 <body>
   <div class="fluid-container">
     <nav class="navbar navbar-expand-lg navbar-dark" id="court-navbar">
       <div class="navbar-brand">
-        <a href="./index.html" class="float-left">
+        <a href="#" onclick="$ec.loadHomePage();" class="float-left">
           <div id="img-logo">
           </div>
         </a>
-        <a href="./index.html" class="link-text">
+        <a href="#" onclick="$ec.loadHomePage();" class="link-text">
           <h1>E-Court</h1>
         </a>
         <p>
@@ -34,7 +34,7 @@
       <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a href="#" class="nav-link active">Home</a>
+            <a href="#" onclick="$ec.loadHomePage();" class="nav-link active">Home</a>
           </li>
           <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" role="button" id="navbarDropdown" data-toggle="dropdown">Services</a>
@@ -74,6 +74,18 @@
 
   </div>
 
+  <footer>
+    <div class="footer-icon">
+      <i class="fab fa-facebook"></i>
+      <i class="fab fa-twitter"></i>
+      <i class="fas fa-envelope"></i>
+      <i class="fab fa-instagram"></i>
+    </div>
+    <div class="copyright">
+      <p>Copyright &copy; 2020 by E-Court -- Make In India</p>
+    </div>
+  </footer>
+
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
@@ -81,7 +93,7 @@
   <script src="./js/ajax-utils.js"></script>
   <script src="./js/script.js"></script>
 
-  
+
 </body>
 
 </html>

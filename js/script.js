@@ -16,6 +16,11 @@
     $ajaxUtils.sendGetRequest(homeHtml, responseHandler);
   });
 
+  ec.loadHomePage = function () {
+    showLoadingSpinner();
+    $ajaxUtils.sendGetRequest(homeHtml, responseHandler);
+  }
+
   ec.loadContactPage = function () {
     showLoadingSpinner();
     $ajaxUtils.sendGetRequest(contactHtml, responseHandler);

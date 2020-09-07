@@ -9,6 +9,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/5130183192.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="./css/styles.css" />
+
+  
 </head>
 
 <body>
@@ -30,7 +32,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbar">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <a href="#" class="nav-link active">Home</a>
           </li>
@@ -57,7 +59,7 @@
             <a href="#" class="nav-link dropdown-toggle" role="button" id="navbarDropdown" data-toggle="dropdown">More</a>
             <div class="dropdown-menu">
               <a href="#" class="dropdown-item">About</a>
-              <a href="#" class="dropdown-item">Contact</a>
+              <a href="#" onclick="$ec.loadContactPage();" class="dropdown-item">Contact</a>
             </div>
           </li>
           <!-- <li class="nav-item">
@@ -68,96 +70,18 @@
     </nav>
   </div>
 
-  <div class="" id="court-pic-div">
-    <div class="court-pic">
-      <img src="./images/court-pic.jpg" alt="court-pic">
-    </div>
-    <div class="card-1">
-      <div class="card">
-        <i class="fas fa-gavel"></i>
-        <div class="card-body">
-          <h2 class="card-title">Short Time Result</h2>
-          <p class="card-text">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua.  </p>
-        </div>
-      </div>
-    </div>
+  <div id="main-content">
 
-    <div class="card-2">
-      <div class="card">
-        <i class="fas fa-balance-scale"></i>
-        <div class="card-body">
-          <h2 class="card-title">We Stand For Justice</h2>
-          <p class="card-text">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua.  </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="card-3">
-      <div class="card">
-        <i class="fas fa-graduation-cap"></i>
-        <div class="card-body">
-          <h2 class="card-title">Experienced Lawyer</h2>
-          <p class="card-text">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua.  </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="d-block d-sm-none  small-screen-card-div">
-      <div class="row">
-        <div class="col-12">
-          <div class="text-center">
-            <div class="card">
-              <i class="fas fa-gavel"></i>
-              <div class="card-body">
-                <h2 class="card-title">Short Time Result</h2>
-                <p class="card-text">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                  incididunt ut labore et dolore magna aliqua.  </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12">
-          <div class="text-center">
-            <div class="card">
-              <i class="fas fa-balance-scale"></i>
-              <div class="card-body">
-                <h2 class="card-title">We Stand For Justice</h2>
-                <p class="card-text">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                  incididunt ut labore et dolore magna aliqua.  </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12">
-          <div class="text-center">
-            <div class="card">
-              <i class="fas fa-graduation-cap"></i>
-              <div class="card-body">
-                <h2 class="card-title">Experienced Lawyer</h2>
-                <p class="card-text">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                  incididunt ut labore et dolore magna aliqua.  </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
+
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  <script src="./js/ajax-utils.js"></script>
+  <script src="./js/script.js"></script>
+
+  
 </body>
 
 </html>

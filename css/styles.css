@@ -37,6 +37,13 @@ body {
   text-decoration: none;
 }
 
+
+#navbar a:hover {
+  border-bottom: 5px solid #2F56B0;
+  transition: right .4s cubic-bezier(0,.5,0,1);
+}
+
+
 #navbar {
   margin-left: 20px;
 }
@@ -44,7 +51,7 @@ body {
 #court-navbar .nav-link {
   color: #fff;
   padding: 0px 14px;
-  font-size: 1.2em;
+  font-size: 1.3em;
 }
 
 #court-pic-div {
@@ -114,7 +121,10 @@ body {
 
 /* Medium Devices */
 @media (min-width: 992px) and (max-width: 1199px) {
-
+  .nav-item {
+    text-align: center;
+    padding: 10px;
+  }
 }
 
 /* Small Devices */

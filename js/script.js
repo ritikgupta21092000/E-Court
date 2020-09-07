@@ -13,17 +13,26 @@
 
   document.addEventListener("DOMContentLoaded", function (event) {
     showLoadingSpinner();
-    $ajaxUtils.sendGetRequest(homeHtml, responseHandler);
+    setTimeout(function () {
+      $ajaxUtils.sendGetRequest(homeHtml, responseHandler);
+    }, 1000);
+    // $ajaxUtils.sendGetRequest(homeHtml, responseHandler);
   });
 
   ec.loadHomePage = function () {
     showLoadingSpinner();
-    $ajaxUtils.sendGetRequest(homeHtml, responseHandler);
+    setTimeout(function () {
+      $ajaxUtils.sendGetRequest(homeHtml, responseHandler);
+    }, 1000);
+    // $ajaxUtils.sendGetRequest(homeHtml, responseHandler);
   }
 
   ec.loadContactPage = function () {
     showLoadingSpinner();
-    $ajaxUtils.sendGetRequest(contactHtml, responseHandler);
+    setTimeout(function () {
+      $ajaxUtils.sendGetRequest(homeHtml, responseHandler);
+    }, 1000);
+    // $ajaxUtils.sendGetRequest(contactHtml, responseHandler);
   }
 
   function responseHandler(responseText) {

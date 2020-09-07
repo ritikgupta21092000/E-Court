@@ -30,7 +30,7 @@
   ec.loadContactPage = function () {
     showLoadingSpinner();
     setTimeout(function () {
-      $ajaxUtils.sendGetRequest(homeHtml, responseHandler);
+      $ajaxUtils.sendGetRequest(contactHtml, responseHandler);
     }, 1000);
     // $ajaxUtils.sendGetRequest(contactHtml, responseHandler);
   }

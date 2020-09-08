@@ -196,11 +196,17 @@ footer {
   /* padding: 20px; */
   margin-right: 20px;
   font-size: 1.5em;
+  cursor: pointer;
 }
 
 .copyright {
   margin-top: 10px;
   font-size: 1.3em;
+}
+
+.login-text {
+  margin-left: 45%;
+  font-family: cursive;
 }
 
 /* Large Devices */

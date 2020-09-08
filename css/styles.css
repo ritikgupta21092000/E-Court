@@ -283,4 +283,14 @@ footer {
   .download-section button {
     margin-top: 20px;
   }
+
+  .login-text {
+    margin-left: 35%;
+    font-family: cursive;
+  }
+
+  #loginModal button {
+    margin-left: 20px;
+    margin-top: 5px;
+  }
 }

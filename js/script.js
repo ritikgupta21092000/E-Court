@@ -2,6 +2,7 @@
   var ec = {};
   var homeHtml = "snippets/home-snippet.html";
   var contactHtml = "snippets/contact-snippet.html";
+  var aboutHtml = "snippets/about-snippet.html";
   function insertHtml(selector, html) {
     document.querySelector(selector).innerHTML = html;
   }
@@ -33,6 +34,13 @@
       $ajaxUtils.sendGetRequest(contactHtml, responseHandler);
     }, 1000);
     // $ajaxUtils.sendGetRequest(contactHtml, responseHandler);
+  }
+
+  ec.loadAboutPage = function () {
+    showLoadingSpinner();
+    setTimeout(() => {
+      $ajaxUtils.sendGetRequest(aboutHtml, responseHandler);
+    }, 1000);
   }
 
   function responseHandler(responseText) {

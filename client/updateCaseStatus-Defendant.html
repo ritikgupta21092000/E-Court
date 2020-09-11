@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="css/updateCaseStatusStyle.css">
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Update Case Status</h1>
+    <form action="updateCaseStatus-Case.html" method="post">
+      <div class="form my-auto">
+        <h2>Details of Defendant</h2>
+        <div class="form-row">
+          <div class="col">
+            <label for="firstName">First Name:<span class="compulsory">*</span></label>
+          </div>
+          <div class="col">
+            <input type="text" class="form-control" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <label for="middleName">Middle Name:</label>
+          </div>
+          <div class="col">
+            <input type="text" class="form-control">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <label for="lastName">Last Name:<span class="compulsory">*</span></label>
+          </div>
+          <div class="col">
+            <input type="text" class="form-control" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <label for="address">Address:<span class="compulsory">*</span></label>
+          </div>
+          <div class="col">
+            <textarea required rows="5" cols="30"></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <label for="lawyerName">Lawyer Name:<span class="compulsory">*</span></label>
+          </div>
+          <div class="col">
+            <input type="text" class="form-control" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col">
+            <label for="lawyerID">Lawyer ID:<span class="compulsory">*</span></label>
+          </div>
+          <div class="col">
+            <input type="text" class="form-control" required>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div>
+        <center><button type="submit" class="btn btn-success submit">Next</button></center>
+      </div>
+    </form>
+
+  </div>
+
+
+</body>
+
+</html>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

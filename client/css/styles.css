@@ -64,11 +64,11 @@ body {
   opacity: 0.9;
 }
 
-.card {
+/* .card {
   width: 18rem;
   height: auto;
   border-bottom: 2px solid pink;
-}
+} */
 
 .card-1 {
   height: auto;

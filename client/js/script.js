@@ -3,6 +3,8 @@
   var homeHtml = "snippets/home-snippet.html";
   var contactHtml = "snippets/contact-snippet.html";
   var aboutHtml = "snippets/about-snippet.html";
+  var advocateHtml = "snippets/findadvocate-snippet.html";
+
   function insertHtml(selector, html) {
     document.querySelector(selector).innerHTML = html;
   }
@@ -37,6 +39,13 @@
     showLoadingSpinner();
     setTimeout(() => {
       $ajaxUtils.sendGetRequest(aboutHtml, responseHandler);
+    }, 1000);
+  }
+
+  ec.loadAdvocatePage = function () {
+    showLoadingSpinner();
+    setTimeout(() => {
+      $ajaxUtils.sendGetRequest(advocateHtml, responseHandler);
     }, 1000);
   }
 

@@ -10,7 +10,8 @@
   }
 
   function showLoadingSpinner() {
-    var html = "<div class='text-center'><img src='./images/ajax-loader.gif'></div>";
+    var html =
+      "<div class='text-center'><img src='./images/ajax-loader.gif'></div>";
     insertHtml("#main-content", html);
   }
 
@@ -26,28 +27,92 @@
     setTimeout(function () {
       $ajaxUtils.sendGetRequest(homeHtml, responseHandler);
     }, 1000);
-  }
+  };
 
   ec.loadContactPage = function () {
     showLoadingSpinner();
     setTimeout(function () {
       $ajaxUtils.sendGetRequest(contactHtml, responseHandler);
     }, 1000);
-  }
+  };
 
   ec.loadAboutPage = function () {
     showLoadingSpinner();
     setTimeout(() => {
       $ajaxUtils.sendGetRequest(aboutHtml, responseHandler);
     }, 1000);
-  }
+  };
 
   ec.loadAdvocatePage = function () {
     showLoadingSpinner();
     setTimeout(() => {
       $ajaxUtils.sendGetRequest(advocateHtml, responseHandler);
     }, 1000);
-  }
+  };
+
+  $("#register").click(function (e) {
+    e.preventDefault();
+
+    var data = {};
+    data.username = $("#email").val();
+    data.password = $("#pwd").val();
+
+    $.ajax({
+      type: "POST",
+      data: JSON.stringify(data),
+      contentType: "application/json",
+      url: "http://localhost:3001/signup",
+      success: function (data) {
+        if (data.success) {
+          Swal.fire(
+            "Registered Sucessfully!",
+            "You clicked the button!",
+            "success"
+          );
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: "<a href>Why do I have this issue?</a>",
+          });
+        }
+      },
+    });
+  });
+
+  $("#login").click(function (e) {
+    e.preventDefault();
+    var data = {};
+    data.username = $("#username").val();
+    data.password = $("#password").val();
+
+    $.ajax({
+      type: "POST",
+      data: JSON.stringify(data),
+      contentType: "application/json",
+      url: "http://localhost:3001/login",
+      success: function (data) {
+        if (data.user == null) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: "<a href>Why do I have this issue?</a>",
+          });
+        } else if (data.user.admin === true) {
+          Swal.fire("Welcome Admin!", "You clicked the button!", "success");
+          insertHtml("#main-content", "<h1>Hello World</h1>");
+        } else if (data.user.admin === false) {
+          Swal.fire(
+            "LogedIn Successfully!",
+            "You clicked the button!",
+            "success"
+          );
+        }
+      },
+    });
+  });
 
   function responseHandler(responseText) {
     insertHtml("#main-content", responseText);

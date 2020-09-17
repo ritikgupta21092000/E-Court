@@ -56,9 +56,9 @@
 .input-group-append {
   margin-top: 2%;
 }
-#rightCard1,
-#rightCard2,
-#rightCard3 {
+.rightCard,
+.rightCard,
+.rightCard {
   margin-right: 1%;
   margin-top: 2%;
 }

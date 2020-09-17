@@ -35,6 +35,10 @@ const userSchema = new mongoose.Schema({
 
 const User = new mongoose.model("user", userSchema);
 
+app.get("/lawyers", function (req, res) {
+  res.render("lawyer");
+});
+
 app.post("/signup", function (req, res) {
   const newUser = {
     username: req.body.username,

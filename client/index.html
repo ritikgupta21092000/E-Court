@@ -8,7 +8,7 @@
   <!-- Bootstrapcdn -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
-    <!-- Google Fonts -->
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/5130183192.js" crossorigin="anonymous"></script>
@@ -49,12 +49,6 @@
               <a href="#" onclick="$ec.loadAdvocatePage();" class="dropdown-item">Search Lawyer</a>
             </div>
           </li>
-          <!-- <li class="nav-item">
-            <a href="#" class="nav-link">All Laws</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">Search Lawyer</a>
-          </li> -->
           <li class="nav-item">
             <a href="#" class="nav-link">Dashboard</a>
           </li>
@@ -69,9 +63,17 @@
               <a href="#" onclick="$ec.loadContactPage();" class="dropdown-item">Contact</a>
             </div>
           </li>
-          <!-- <li class="nav-item">
-            <a href="#" class="nav-link">Welcome Ritik Gupta</a>
-          </li> -->
+          <li class="nav-item dropdown manipulated-text">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">LogOut</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Go To Admin Panel</a>
+            </div>
+          </li>
         </ul>
       </div>
     </nav>
@@ -125,7 +127,8 @@
                           class="btn btn-sm btn-dark">Cancel</button>
                       </div>
                       <div class="p-0 ml-2">
-                        <button type="button" data-dismiss="modal" id="login" name="button" class="btn btn-sm btn-primary">Login</button>
+                        <button type="button" data-dismiss="modal" id="login" name="button"
+                          class="btn btn-sm btn-primary">Login</button>
                       </div>
                     </div>
                   </form>
@@ -173,7 +176,8 @@
 
                   <div class="form-group">
                     <button type="button" class="btn btn-sm btn-dark" data-dismiss="modal">Cancel</button>
-                    <button type="submit" data-dismiss="modal" id="register" class="btn btn-sm btn-primary">SignUp</button>
+                    <button type="submit" data-dismiss="modal" id="register"
+                      class="btn btn-sm btn-primary">SignUp</button>
                   </div>
                 </form>
               </div>

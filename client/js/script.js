@@ -4,6 +4,8 @@
   var contactHtml = "snippets/contact-snippet.html";
   var aboutHtml = "snippets/about-snippet.html";
   var addLawyerHtml = "addLawyer-Personal.html";
+  var clientUrl = "http://localhost:3000/client/index.html";
+  var adminPanelUrl = "http://localhost:3000/client/adminPanel.html";
   var serverUrl = "http://localhost:3001/";
 
   function insertHtml(selector, html) {
@@ -17,10 +19,12 @@
   }
 
   document.addEventListener("DOMContentLoaded", function (event) {
-    showLoadingSpinner();
-    setTimeout(function () {
-      $ajaxUtils.sendGetRequest(homeHtml, responseHandler);
-    }, 1000);
+    if (window.location.href === clientUrl) {
+      showLoadingSpinner();
+      setTimeout(function () {
+        $ajaxUtils.sendGetRequest(homeHtml, responseHandler);
+      }, 1000);
+    }
   });
 
   ec.loadHomePage = function () {
@@ -108,15 +112,15 @@
             footer: "<a href>Why do I have this issue?</a>",
           });
         } else if (data.user.admin === true) {
-          Swal.fire("Welcome Admin!", "You clicked the button!", "success");
-          // insertHtml("#main-content", "<h1>Hello World</h1>");
-          $ajaxUtils.sendGetRequest(addLawyerHtml, responseHandler);
+          location.replace(adminPanelUrl);
         } else if (data.user.admin === false) {
           Swal.fire(
             "LogedIn Successfully!",
             "You clicked the button!",
             "success"
           );
+          $(".manipulated-text a.nav-link").text(data.user.username);
+          $(".manipulated-text").removeClass("manipulated-text");
         }
       },
     });

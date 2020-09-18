@@ -6,6 +6,10 @@ body {
   font-size: 16px;
 }
 
+.manipulated-text {
+  display: none;
+}
+
 .navbar-dark {
   background-color: #1e90ff;
 }

@@ -1,0 +1,92 @@
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="css/addLawyerStyle.css">
+</head>
+
+<div class="container">
+  <h1>Add Lawyer</h1>
+  <form action="">
+    <div class="form my-auto">
+      <h2>Personal Information</h2>
+      <div class="form-row">
+        <div class="col">
+          <label for="firstName">First Name:<span class="compulsory">*</span></label>
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <label for="middleName">Middle Name:</label>
+        </div>
+        <div class="col">
+          <input type="text" class="form-control">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <label for="lastName">Last Name:<span class="compulsory">*</span></label>
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <label for="dob">Date of Birth:<span class="compulsory">*</span></label>
+        </div>
+        <div class="col">
+          <input type="date" class="form-control" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <label for="gender">Gender:<span class="compulsory">*</span></label>
+        </div>
+        <div class="col">
+          <input type="radio" value="male" name="gender"> <label>Male</label><br>
+          <input type="radio" value="female" name="gender"> <label>Female</label><br>
+          <input type="radio" value="other" name="gender"> <label>Other</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <label for="mobileno">Mobile Number:<span class="compulsory">*</span></label>
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <label for="state">State:<span class="compulsory">*</span></label>
+        </div>
+        <div class="col">
+          <select name="state" class="form-control">
+            <option value="">Maharashtra</option>
+            <option value="">Rajasthan</option>
+            <option value="">Karnataka</option>
+            <option value="">Punjab</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <label for="city">City:<span class="compulsory">*</span></label>
+        </div>
+        <div class="col">
+          <select name="city" class="form-control">
+            <option value="">Mumbai</option>
+            <option value="">Chennai</option>
+            <option value="">Bangalore</option>
+            <option value="">Punjab</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+
+    <div>
+      <center><a role="button" onclick="$admin.addLawyerProfessionalDetails();" type="submit"
+          class="btn btn-success submit">Next</a></center>

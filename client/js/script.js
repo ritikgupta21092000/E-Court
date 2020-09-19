@@ -19,12 +19,10 @@
   }
 
   document.addEventListener("DOMContentLoaded", function (event) {
-    if (window.location.href === clientUrl) {
-      showLoadingSpinner();
-      setTimeout(function () {
-        $ajaxUtils.sendGetRequest(homeHtml, responseHandler);
-      }, 1000);
-    }
+    showLoadingSpinner();
+    setTimeout(function () {
+      $ajaxUtils.sendGetRequest(homeHtml, responseHandler);
+    }, 1000);
   });
 
   ec.loadHomePage = function () {
@@ -67,7 +65,6 @@
     var data = {};
     data.username = $("#email").val();
     data.password = $("#pwd").val();
-
     $.ajax({
       type: "POST",
       data: JSON.stringify(data),

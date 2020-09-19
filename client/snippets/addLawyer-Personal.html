@@ -5,7 +5,7 @@
 
 <div class="container">
   <h1>Add Lawyer</h1>
-  <form action="">
+  <form action="adminPanel.html" method="post">
     <div class="form my-auto">
       <h2>Personal Information</h2>
       <div class="form-row">
@@ -13,7 +13,7 @@
           <label for="firstName">First Name:<span class="compulsory">*</span></label>
         </div>
         <div class="col">
-          <input type="text" class="form-control" required>
+          <input type="text" id="firstName" class="form-control" required>
         </div>
       </div>
       <div class="form-row">
@@ -21,7 +21,7 @@
           <label for="middleName">Middle Name:</label>
         </div>
         <div class="col">
-          <input type="text" class="form-control">
+          <input type="text" id="middleName" class="form-control">
         </div>
       </div>
       <div class="form-row">
@@ -29,7 +29,7 @@
           <label for="lastName">Last Name:<span class="compulsory">*</span></label>
         </div>
         <div class="col">
-          <input type="text" class="form-control" required>
+          <input type="text" id="lastName" class="form-control" required>
         </div>
       </div>
       <div class="form-row">
@@ -37,7 +37,7 @@
           <label for="dob">Date of Birth:<span class="compulsory">*</span></label>
         </div>
         <div class="col">
-          <input type="date" class="form-control" required>
+          <input type="date" id="dob" class="form-control" required>
         </div>
       </div>
       <div class="form-row">
@@ -45,9 +45,17 @@
           <label for="gender">Gender:<span class="compulsory">*</span></label>
         </div>
         <div class="col">
-          <input type="radio" value="male" name="gender"> <label>Male</label><br>
-          <input type="radio" value="female" name="gender"> <label>Female</label><br>
-          <input type="radio" value="other" name="gender"> <label>Other</label>
+          <input type="radio" class="gender" value="male" name="gender"> <label>Male</label><br>
+          <input type="radio" class="gender" value="female" name="gender"> <label>Female</label><br>
+          <input type="radio" class="gender" value="other" name="gender"> <label>Other</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <label for="email">Email Id:<span class="compulsory">*</span></label>
+        </div>
+        <div class="col">
+          <input type="email" id="email" class="form-control" value="" required>
         </div>
       </div>
       <div class="form-row">
@@ -55,7 +63,7 @@
           <label for="mobileno">Mobile Number:<span class="compulsory">*</span></label>
         </div>
         <div class="col">
-          <input type="text" class="form-control" required>
+          <input type="tel" id="mobile" class="form-control" required>
         </div>
       </div>
       <div class="form-row">
@@ -63,11 +71,11 @@
           <label for="state">State:<span class="compulsory">*</span></label>
         </div>
         <div class="col">
-          <select name="state" class="form-control">
-            <option value="">Maharashtra</option>
-            <option value="">Rajasthan</option>
-            <option value="">Karnataka</option>
-            <option value="">Punjab</option>
+          <select id="state" name="state" class="form-control">
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Rajasthan">Rajasthan</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Punjab">Punjab</option>
           </select>
         </div>
       </div>
@@ -76,17 +84,16 @@
           <label for="city">City:<span class="compulsory">*</span></label>
         </div>
         <div class="col">
-          <select name="city" class="form-control">
-            <option value="">Mumbai</option>
-            <option value="">Chennai</option>
-            <option value="">Bangalore</option>
-            <option value="">Punjab</option>
+          <select id="city" name="city" class="form-control">
+            <option value="Mumbai">Mumbai</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Punjab">Punjab</option>
           </select>
         </div>
       </div>
     </div>
 
 
-    <div>
       <center><a role="button" onclick="$admin.addLawyerProfessionalDetails();" type="submit"
-          class="btn btn-success submit">Next</a></center>
+        class="btn btn-success submit">Next</a></center>

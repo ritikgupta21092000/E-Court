@@ -73,7 +73,7 @@
       success: function (data) {
         if (data.success) {
           Swal.fire(
-            "Registered Sucessfully!",
+            "Registered Successfully!",
             "You clicked the button!",
             "success"
           );
@@ -112,7 +112,7 @@
           location.replace(adminPanelUrl);
         } else if (data.user.admin === false) {
           Swal.fire(
-            "LogedIn Successfully!",
+            "LoggedIn Successfully!",
             "You clicked the button!",
             "success"
           );

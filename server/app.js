@@ -33,10 +33,62 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+const lawyersSchema = new mongoose.Schema({
+  username: {
+    type: String
+  },
+  fullname: {
+    type: String
+  },
+  dob: {
+    type: String
+  },
+  gender: {
+    type: String
+  },
+  mobile: {
+    type: Number
+  },
+  state: {
+    type: String
+  },
+  city: {
+    type: String
+  },
+  degreeCollege: {
+    type: String
+  },
+  stateOfCollege: {
+    type: String
+  },
+  yearOfPassing: {
+    type: Number
+  },
+  startPracticeDate: {
+    type: String
+  },
+  speciality: {
+    type: Array
+  },
+  photoUrl: {
+    type: String
+  },
+  degreePhotoUrl: {
+    type: String
+  }
+});
+
 const User = new mongoose.model("user", userSchema);
+const Lawyers = new mongoose.model("Lawyer", lawyersSchema);
 
 app.get("/lawyers", function (req, res) {
-  res.render("lawyer");
+  Lawyers.find({}, function (err, foundLawyers) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("lawyer", {foundLawyers: foundLawyers});
+    }
+  });
 });
 
 app.post("/signup", function (req, res) {
@@ -65,6 +117,43 @@ app.post("/login", function (req, res) {
       res.send({ success: true, user: foundUser });
     }
   });
+});
+
+app.post("/addLayerPersonal", function (req, res) {
+  const newLawyer = {
+    username: req.body.username,
+    fullname: req.body.fullname,
+    dob: req.body.dob,
+    gender: req.body.gender,
+    mobile: req.body.mobile,
+    state: req.body.state,
+    city: req.body.city
+  };
+  Lawyers.create(newLawyer, function (err, createdLawyer) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send({ lawyer: createdLawyer });
+    }
+  });
+});
+
+app.post("/addLayerProfessional", function (req, res) {
+  const username = req.body.username;
+  const lawyerProfessionalInfo = {
+    degreeCollege: req.body.degreeCollege,
+    stateOfCollege: req.body.stateOfCollege,
+    yearOfPassing: req.body.yearOfPassing,
+    startPracticeDate: req.body.startPracticeDate,
+    speciality: req.body.speciality
+  };
+  Lawyers.updateOne({username: username}, {$set: lawyerProfessionalInfo}, function (err, result) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send({ success: true })
+    }
+  })
 });
 
 app.listen(3001, () => {

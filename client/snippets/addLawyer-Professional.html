@@ -6,19 +6,15 @@
 
 <div class="container">
   <h1>Add Lawyer</h1>
-  <form method="post">
-
-
+  <form action="adminPanel.html" method="post">
     <div class="form my-auto">
-
       <h2>Professional Information</h2>
-
       <div class="form-row">
         <div class="col">
           <label for="degreeCollege">Degree College:<span class="compulsory">*</span></label>
         </div>
         <div class="col">
-          <input type="text" class="form-control" required>
+          <input type="text" id="degreeCollege" class="form-control" required>
         </div>
       </div>
       <div class="form-row">
@@ -26,11 +22,11 @@
           <label for="statedegreeCollege">State of Degree College:<span class="compulsory">*</span></label>
         </div>
         <div class="col">
-          <select name="state" class="form-control">
-            <option value="">Maharashtra</option>
-            <option value="">Rajasthan</option>
-            <option value="">Karnataka</option>
-            <option value="">Punjab</option>
+          <select id="statedegreeCollege" name="state" class="form-control">
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Rajasthan">Rajasthan</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Punjab">Punjab</option>
           </select>
         </div>
       </div>
@@ -39,7 +35,7 @@
           <label for="yop">Year of Passing:<span class="compulsory">*</span></label>
         </div>
         <div class="col">
-          <input type="text" class="form-control" required>
+          <input type="text" id="yop" class="form-control" required>
         </div>
       </div>
 
@@ -48,7 +44,7 @@
           <label for="dosp">Date of Starting Practice:<span class="compulsory">*</span></label>
         </div>
         <div class="col">
-          <input type="date" class="form-control" required>
+          <input type="date" id="dosp" class="form-control" required>
         </div>
       </div>
 
@@ -57,12 +53,12 @@
           <label for="speciality">Speciality:</label>
         </div>
         <div class="col">
-          <input type="checkbox" value="criminal" name="speciality"> <label>Criminal</label><br>
-          <input type="checkbox" value="family" name="speciality"> <label>Family</label><br>
-          <input type="checkbox" value="womensRights" name="speciality"> <label>Women's Rights</label><br>
-          <input type="checkbox" value="Business" name="speciality"> <label>Business</label><br>
-          <input type="checkbox" value="General" name="speciality"> <label>General</label><br>
-          <input type="checkbox" value="Other" name="speciality"> <label>Other</label><br>
+          <input type="checkbox" id="speciality" value="criminal" name="speciality"> <label>Criminal</label><br>
+          <input type="checkbox" id="speciality" value="family" name="speciality"> <label>Family</label><br>
+          <input type="checkbox" id="speciality" value="womensRights" name="speciality"> <label>Women's Rights</label><br>
+          <input type="checkbox" id="speciality" value="Business" name="speciality"> <label>Business</label><br>
+          <input type="checkbox" id="speciality" value="General" name="speciality"> <label>General</label><br>
+          <input type="checkbox" id="speciality" value="Other" name="speciality"> <label>Other</label><br>
         </div>
       </div>
       <div class="form-row">
@@ -70,7 +66,7 @@
           <label for="lawyerPic">Upload Photo of Lawyer:<span class="compulsory">*</span></label>
         </div>
         <div class="col">
-          <input type="file" required>
+          <input type="file" id="photo" required>
         </div>
       </div>
       <div class="form-row">
@@ -78,16 +74,12 @@
           <label for="degreePic">Upload Photo of Degree:<span class="compulsory">*</span></label>
         </div>
         <div class="col">
-          <input type="file" required>
+          <input type="file" id="certificate" required>
         </div>
       </div>
-
-
-
     </div>
     <div>
-      <center><button type="submit" class="btn btn-success submit">Submit</button></center>
+      <center><button type="submit" onclick="$admin.addLawyerAllInfo();" class="btn btn-success submit">Submit</button></center>
     </div>
   </form>
-
 </div>

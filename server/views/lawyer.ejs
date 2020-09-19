@@ -35,19 +35,19 @@
 
     <!-- Right Side -->
     <div class="col-12 col-sm-7">
-      <% for (var i = 0; i<=2; i++) { %>
+      <% foundLawyers.forEach(function (lawyer) { %>
       <div class="card rightCard" id="">
         <div class="card-header">
-          <p id="headerName">Advocate Ritesh Dewoolkar</p>&nbsp;<i class="fa fa-check-circle" aria-hidden="true"
+          <p id="headerName">Advocate <%= lawyer.fullname %></p>&nbsp;<i class="fa fa-check-circle" aria-hidden="true"
             style="color: blue;"></i>
           <p id="viewprofile"><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;View Profile</p>
         </div>
         <div class="card-body">
-          <img src="./images/Ritesh.jpg" alt="ritesh" id="personimage">
+          <img src="./images/ritikgupta.jpg" alt="ritesh" id="personimage">
 
           <div class="card" id="innercard">
             <p><i class="fa fa-university" aria-hidden="true"></i>&nbsp;&nbsp;Supreme Court,High Court</p>
-            <p><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp;Mumbai</p>
+            <p><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp;<%= lawyer.city %></p>
             <p><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;&nbsp;<button type="button" class="btn btn-primary"
                 style="background-color: #983454">Book An Appointment</button></p>
 
@@ -55,7 +55,7 @@
 
         </div>
       </div>
-      <% } %>
+      <% }) %>
 
 
 

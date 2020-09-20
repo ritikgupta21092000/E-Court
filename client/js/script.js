@@ -3,8 +3,7 @@
   var homeHtml = "snippets/home-snippet.html";
   var contactHtml = "snippets/contact-snippet.html";
   var aboutHtml = "snippets/about-snippet.html";
-  var addLawyerHtml = "addLawyer-Personal.html";
-  var clientUrl = "http://localhost:3000/client/index.html";
+  var userDashboardHtml = "snippets/user-dashboard-snippet.html";
   var adminPanelUrl = "http://localhost:3000/client/adminPanel.html";
   var serverUrl = "http://localhost:3001/";
 
@@ -58,6 +57,13 @@
       });
     }, 1000);
   };
+
+  ec.loadUserDashboard = function () {
+    showLoadingSpinner();
+    setTimeout(() => {
+      $ajaxUtils.sendGetRequest(userDashboardHtml, responseHandler);
+    }, 1000);
+  }
 
   $("#register").click(function (e) {
     e.preventDefault();

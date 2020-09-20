@@ -16,6 +16,7 @@
       "<div class='text-center'><img src='./images/ajax-loader.gif'></div>";
     insertHtml("#admin-content", html);
   }
+
   document.addEventListener("DOMContentLoaded", function (event) {
     showLoadingSpinner();
     setTimeout(() => {

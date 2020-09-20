@@ -3,14 +3,18 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const path = require("path");
 const mongoose = require("mongoose");
+const fileupload = require("express-fileupload");
 const cors = require("cors");
 
 const app = express();
+
+var lawyerUsername = "";
 
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../client/index.html")));
+app.use(fileupload());
 app.use(cors());
 
 mongoose.connect("mongodb://localhost:27017/ecourtDB", {
@@ -86,7 +90,7 @@ app.get("/lawyers", function (req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.render("lawyer", {foundLawyers: foundLawyers});
+      res.render("lawyer", { foundLawyers: foundLawyers });
     }
   });
 });
@@ -139,7 +143,7 @@ app.post("/addLayerPersonal", function (req, res) {
 });
 
 app.post("/addLayerProfessional", function (req, res) {
-  const username = req.body.username;
+  lawyerUsername = req.body.username;
   const lawyerProfessionalInfo = {
     degreeCollege: req.body.degreeCollege,
     stateOfCollege: req.body.stateOfCollege,
@@ -147,13 +151,33 @@ app.post("/addLayerProfessional", function (req, res) {
     startPracticeDate: req.body.startPracticeDate,
     speciality: req.body.speciality
   };
-  Lawyers.updateOne({username: username}, {$set: lawyerProfessionalInfo}, function (err, result) {
+  Lawyers.updateOne({ username: lawyerUsername }, { $set: lawyerProfessionalInfo }, function (err, result) {
     if (err) {
       console.log(err);
     } else {
       res.send({ success: true })
     }
-  })
+  });
+});
+
+app.post('/saveImage', (req, res) => {
+  var image = req.files.imageFile;
+  var fileName = req.files.imageFile.name;
+  var folderPath = path.join(__dirname, "../client/images/lawyerPhoto/" + fileName);
+  var photoUrl = "./images/lawyerPhoto/" + fileName;
+  image.mv(folderPath, function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      Lawyers.updateOne({ username: lawyerUsername }, { $set: { photoUrl: photoUrl } }, function (err, result) {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send({ success: true })
+        }
+      });
+    }
+  });
 });
 
 app.listen(3001, () => {

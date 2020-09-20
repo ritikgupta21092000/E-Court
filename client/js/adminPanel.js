@@ -68,7 +68,10 @@
     $.each($("input[id='speciality']:checked"), function () {
       speciality.push($(this).val());
     });
-    console.log(document.getElementById("photo").files[0].name);
+    var file = document.getElementById("photo").files[0];
+    var form = document.querySelector("form");
+    var formData = new FormData(form);
+    formData.append("imageFile", file);
     var data = {
       username: admin.lawyerUsername,
       degreeCollege: $("#degreeCollege").val(),
@@ -84,14 +87,26 @@
       contentType: "application/json",
       url: serverUrl + "addLayerProfessional",
       success: function (data) {
+        console.log("Success");
+      }
+    });
+
+    fetch(serverUrl + 'saveImage', {
+      method: 'POST',
+      body: formData
+    })
+      .then(response => response.json())
+      .then(data => {
         Swal.fire(
           "Registered " + admin.lawyerUsername + " lawyer successfully!",
           "You clicked the button!",
           "success"
         );
         $ajaxUtils.sendGetRequest(adminFrontHtml, responseHandler);
-      }
-    });
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   function responseHandler(responseText) {

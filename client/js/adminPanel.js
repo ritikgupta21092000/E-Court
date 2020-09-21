@@ -3,6 +3,10 @@
   var adminFrontHtml = "snippets/admin-front-snippet.html";
   var addLawyerPersonalForm = "snippets/addLawyer-Personal.html";
   var addLawyerProfessionalForm = "snippets/addLawyer-Professional.html";
+  var updateCaseStatusAppelantForm = "snippets/updateCaseStatus-Appelant.html";
+  var updateCaseStatusDefendantForm = "snippets/updateCaseStatus-Defendant.html";
+  var updateCaseForm = "snippets/updateCaseStatus-Case.html";
+
   var serverUrl = "http://localhost:3001/";
 
   admin.lawyerUsername = "";
@@ -109,6 +113,27 @@
       .catch(error => {
         console.error(error);
       });
+  }
+
+  admin.updateCaseStatusAppelant = function () {
+    showLoadingSpinner();
+    setTimeout(function () {
+      $ajaxUtils.sendGetRequest(updateCaseStatusAppelantForm, responseHandler);
+    }, 1000);
+  }
+
+  admin.updateCaseStatusDefendant = function () {
+    showLoadingSpinner();
+    setTimeout(function () {
+      $ajaxUtils.sendGetRequest(updateCaseStatusDefendantForm, responseHandler);
+    }, 1000);
+  }
+
+  admin.updateCase = function () {
+    showLoadingSpinner();
+    setTimeout(function () {
+      $ajaxUtils.sendGetRequest(updateCaseForm, responseHandler);
+    }, 1000);
   }
 
   function responseHandler(responseText) {

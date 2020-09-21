@@ -162,18 +162,28 @@ app.post("/addLayerProfessional", function (req, res) {
 
 app.post('/saveImage', (req, res) => {
   var image = req.files.imageFile;
+  var certificate = req.files.certificateFile;
   var fileName = req.files.imageFile.name;
+  var certificateFileName = req.files.certificateFile.name;
   var folderPath = path.join(__dirname, "../client/images/lawyerPhoto/" + fileName);
+  var certificateFolderPath = path.join(__dirname, "../client/images/lawyerCertificate/" + certificateFileName);
   var photoUrl = "./images/lawyerPhoto/" + fileName;
+  var certificateUrl = "./images/lawyerCertificate/" + certificateFileName;
   image.mv(folderPath, function (err) {
     if (err) {
       console.log(err);
     } else {
-      Lawyers.updateOne({ username: lawyerUsername }, { $set: { photoUrl: photoUrl } }, function (err, result) {
+      certificate.mv(certificateFolderPath, function (err) {
         if (err) {
           console.log(err);
         } else {
-          res.send({ success: true })
+          Lawyers.updateOne({ username: lawyerUsername }, { $set: { photoUrl: photoUrl, degreePhotoUrl: certificateUrl } }, function (err, result) {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send({ success: true })
+            }
+          });
         }
       });
     }

@@ -69,9 +69,11 @@
       speciality.push($(this).val());
     });
     var file = document.getElementById("photo").files[0];
+    var certificateFile = document.getElementById("certificate").files[0];
     var form = document.querySelector("form");
     var formData = new FormData(form);
     formData.append("imageFile", file);
+    formData.append("certificateFile", certificateFile);
     var data = {
       username: admin.lawyerUsername,
       degreeCollege: $("#degreeCollege").val(),

@@ -42,9 +42,14 @@ body {
   text-decoration: none;
 }
 
+#navbar a {
+  transition: border-bottom;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in;
+}
+
 #navbar a:hover {
   border-bottom: 5px solid #2f56b0;
-  transition: right 0.4s cubic-bezier(0, 0.5, 0, 1);
 }
 
 #navbar {

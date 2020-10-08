@@ -6,6 +6,7 @@
   var updateCaseStatusAppelantForm = "snippets/updateCaseStatus-Appelant.html";
   var updateCaseStatusDefendantForm = "snippets/updateCaseStatus-Defendant.html";
   var updateCaseForm = "snippets/updateCaseStatus-Case.html";
+  var viewAllLawyersHtml = "snippets/view-all-lawyers.html";
 
   var serverUrl = "http://localhost:3001/";
 
@@ -133,6 +134,13 @@
     showLoadingSpinner();
     setTimeout(function () {
       $ajaxUtils.sendGetRequest(updateCaseForm, responseHandler);
+    }, 1000);
+  }
+
+  admin.viewAllLawyers = function () {
+    showLoadingSpinner();
+    setTimeout(function () {
+      $ajaxUtils.sendGetRequest(viewAllLawyersHtml, responseHandler);
     }, 1000);
   }
 

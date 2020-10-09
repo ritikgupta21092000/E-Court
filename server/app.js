@@ -95,6 +95,18 @@ app.get("/lawyers", function (req, res) {
   });
 });
 
+app.get("/viewLawyers", function (req, res) {
+  Lawyers.find({}, function (err, foundResult) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("viewLawyers", { lawyers: foundResult });
+    }
+  });
+});
+
+
+
 app.post("/signup", function (req, res) {
   const newUser = {
     username: req.body.username,
@@ -190,6 +202,6 @@ app.post('/saveImage', (req, res) => {
   });
 });
 
-app.listen(3001, () => {
-  console.log("Server is running on port 3001");
+app.listen(5000, () => {
+  console.log("Server is running on port 5000");
 });

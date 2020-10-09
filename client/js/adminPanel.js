@@ -6,9 +6,8 @@
   var updateCaseStatusAppelantForm = "snippets/updateCaseStatus-Appelant.html";
   var updateCaseStatusDefendantForm = "snippets/updateCaseStatus-Defendant.html";
   var updateCaseForm = "snippets/updateCaseStatus-Case.html";
-  var viewAllLawyersHtml = "snippets/view-all-lawyers.html";
 
-  var serverUrl = "http://localhost:3001/";
+  var serverUrl = "http://localhost:5000/";
 
   admin.lawyerUsername = "";
 
@@ -139,9 +138,14 @@
 
   admin.viewAllLawyers = function () {
     showLoadingSpinner();
-    setTimeout(function () {
-      $ajaxUtils.sendGetRequest(viewAllLawyersHtml, responseHandler);
-    }, 1000);
+    $.ajax({
+      type: "GET",
+      url: serverUrl + "viewLawyers",
+      success: function (data) {
+        console.log(data);
+        insertHtml("#admin-content", data);
+      }
+    })
   }
 
   function responseHandler(responseText) {

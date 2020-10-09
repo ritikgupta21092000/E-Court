@@ -5,7 +5,7 @@
   var aboutHtml = "snippets/about-snippet.html";
   var userDashboardHtml = "snippets/user-dashboard-snippet.html";
   var adminPanelUrl = "http://localhost:3000/client/adminPanel.html";
-  var serverUrl = "http://localhost:3001/";
+  var serverUrl = "http://localhost:5000/";
 
   function insertHtml(selector, html) {
     document.querySelector(selector).innerHTML = html;

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Court</title>
+  <!-- Bootstrapcdn -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/5130183192.js" crossorigin="anonymous"></script>
+  <!-- Favicon -->
+  <link rel="icon" href="./images/favicon-32x32.png">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+
+<body>
+  <div class="container-fluid p-0">
+    <nav class="navbar navbar-expand-lg navbar-dark" id="court-navbar">
+      <div class="navbar-brand">
+        <a href="#" onclick="$ec.loadHomePage();" class="float-left">
+          <div id="img-logo">
+          </div>
+        </a>
+        <a href="#" onclick="$ec.loadHomePage();" class="link-text">
+          <h1>E-Court</h1>
+        </a>
+        <p>
+          <i class="fas fa-certificate mr-1"></i>Government Certified
+        </p>
+      </div>
+      <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a href="#" onclick="$ec.loadHomePage();" class="nav-link active">Home</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" role="button" id="navbarDropdown"
+              data-toggle="dropdown">Services</a>
+            <div class="dropdown-menu">
+              <a href="#" class="dropdown-item">All Laws</a>
+              <a href="#" onclick="$ec.loadAdvocatePage();" class="dropdown-item">Search Lawyer</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a href="#" onclick="$ec.loadUserDashboard();" class="nav-link">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" data-toggle="modal" data-target="#loginModal" class="nav-link">SignIn/SignUp</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" role="button" id="navbarDropdown"
+              data-toggle="dropdown">More</a>
+            <div class="dropdown-menu">
+              <a href="#" onclick="$ec.loadAboutPage();" class="dropdown-item">About</a>
+              <a href="#" onclick="$ec.loadContactPage();" class="dropdown-item">Contact</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown manipulated-text">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">LogOut</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <div class="modal fade container-fluid" id="loginModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="login-text">
+            <h4 class="modal-title"><i class="fas fa-user mr-2"></i><i>SignIn</i></h4>
+          </div>
+
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card mb-3" style="width: 100%;">
+            <div class="row no-gutters">
+              <div class="col-md-4">
+                <img src="./images/login.png" class="card-img" alt="login">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <!-- <h5 class="card-title">Login</h5> -->
+                  <form class="" action="index.html" method="post">
+                    <div class="form-group row">
+                      <div class="col-md-2 mt-1">
+                        <label for="username">Email:</label>
+                      </div>
+                      <div class="col-md-9">
+                        <input type="email" class="form-control ml-2" name="username" id="username" value="">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-2 mt-1">
+                        <label for="password">Password:</label>
+                      </div>
+                      <div class="col-md-9">
+                        <input type="password" class="form-control ml-2" name="password" id="password" value="">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="ml-1 col-12 col-md-4">
+                        <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#registerModal"
+                          data-dismiss="modal">New User?Register</a>
+                      </div>
+                      <div class="offset-md-4 p-0">
+                        <button type="button" name="button" data-dismiss="modal"
+                          class="btn btn-sm btn-dark">Cancel</button>
+                      </div>
+                      <div class="p-0 ml-2">
+                        <button type="button" data-dismiss="modal" id="login" name="button"
+                          class="btn btn-sm btn-primary">Login</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade container-fluid p-0" id="registerModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="login-text">
+            <h4 class="modal-title"><i class="fas fa-user-plus mr-1"></i><i>SignUp</i></h4>
+          </div>
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card" style="width: 100%;">
+            <div class="row">
+              <div class="col-md-4">
+                <img src="./images/registration.png" alt="registration" width="100%" height="100%">
+              </div>
+              <div class="col-md-8">
+                <form id="registerForm" action="index.html" method="POST">
+                  <div class="form-group row">
+                    <label for="email" class="col-md-12 mt-1">Email:</label>
+                    <div class="col-md-9">
+                      <input type="email" name="email" id="email" class="form-control">
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="pwd" class="col-md-12 mt-1">Password:</label>
+                    <div class="col-md-9">
+                      <input type="password" name="pwd" id="pwd" class="form-control">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <button type="button" class="btn btn-sm btn-dark" data-dismiss="modal">Cancel</button>
+                    <button type="submit" data-dismiss="modal" id="register"
+                      class="btn btn-sm btn-primary">SignUp</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="main-content">
+
+  </div>
+
+  <footer>
+    <div class="footer-icon">
+      <i class="fab fa-facebook"></i>
+      <i class="fab fa-twitter"></i>
+      <i class="fas fa-envelope"></i>
+      <i class="fab fa-instagram"></i>
+    </div>
+    <div class="copyright">
+      <p>Copyright &copy; 2020 by E-Court -- Make In India</p>
+    </div>
+  </footer>
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script src="./js/ajax-utils.js"></script>
+  <script src="./js/script.js"></script>
+
+
+</body>
+
+</html>

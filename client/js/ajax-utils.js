@@ -12,7 +12,6 @@
     var request = getRequestObject();
     request.onreadystatechange = function () {
       if (request.readyState === 4 && request.status == 200) {
-        
         responseHandler(request.responseText);
       }
     }

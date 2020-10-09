@@ -1,0 +1,93 @@
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="./css/userdashboard.css">
+</head>
+
+<div class="container-fluid row no-gutters">
+  <div class="col-12 col-md-3">
+    <!-- Sidebar Starts -->
+    <div id="sidebar">
+      <div id="sidebar-header">
+        <p><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;User Dashboard</p>
+      </div>
+      <div class="sidebar-item">
+        <a href="#" onclick="$ec.loadHomePage();" id="sidebar-item-link"><i class="fa fa-home"
+            aria-hidden="true"></i>&nbsp;Home</a><br><br>
+        <a href="#" id="sidebar-item-link">
+          <i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;Edit Profile</a><br><br>
+        <a href="#" onclick="$ec.loadContactPage();" id="sidebar-item-link"><i class="fa fa-phone"
+            aria-hidden="true"></i>&nbsp;Contact Us</a><br><br>
+        <a href="#" id="sidebar-item-link"><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp;Case Status</a><br><br>
+        <a href="#" id="sidebar-item-link"><i class="fa fa-lock" aria-hidden="true"></i>&nbsp;Privacy Policy</a><br><br>
+        <a href="#" id="sidebar-item-link"><i class="fa fa-hand-o-right" aria-hidden="true"></i>&nbsp;Suggestions</a>
+      </div>
+    </div>
+    <!-- Sidebar Ends -->
+  </div>
+  <!-- End of Left Side -->
+  <!--Right Side Start-->
+  <div class="col-12 col-md-9 float-right">
+    <!-- Top Nav of User -->
+    <nav class="top-nav ml-2">
+      <a href="#" id="samplenav"><i class="fa fa-search" aria-hidden="true"></i></a>&nbsp;
+      <a href="#" id="samplenav"> <i class="fa fa-bell" aria-hidden="true"></i></a>&nbsp;
+      <a href="#" id="samplenav"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+      <div style="display: inline;">
+        <span id="username-at-top-right">Ritesh</span>
+        <img src="./images/Ritesh.jpg" alt="ritesh" id="top-right-user-image">
+      </div>
+    </nav>
+    <!-- End Of Top Nav -->
+    <!-- Main Content starts -->
+    <!--  First Row -->
+    <div class="row" id="card-content">
+      <!--  First Card -->
+      <div class="card col-12 col-md-3" id="firsttopcard">
+        <div class="card-body">
+          <div class="card-header">Your Current Running Cases</div>
+          <p class="card-text" id="cardtext">No of cases running</p>
+          <a href="#" style="float: right;">View All</a>
+        </div>
+      </div>
+      <!-- Second Card -->
+      <div class="card col-12 col-md-3" id="sectopcard">
+        <div class="card-body">
+          <div class="card-header">Previous Cases</div>
+          <p class="card-text" id="cardtext">No of previous cases</p>
+          <a href="#" style="float: right;">View All</a>
+        </div>
+      </div>
+      <!--  Third Card -->
+      <div class="card col-12 col-md-3" id="thirdtopcard">
+        <div class="card-body">
+          <div class="card-header">No of Cases Won/Loss</div>
+          <p class="card-text" id="cardtext">No of cases won/No of cases losed</p>
+          <a href="#" style="float: right;">View All</a>
+        </div>
+      </div>
+    </div>
+    <!-- First Row Ends -->
+    <!-- Second Row Starts -->
+    <div class="row" id="sidebar-image-content">
+      <div class="card" id="secondrowcard">
+        <div class="card-body">
+          <h2 class="card-title" id="secrowtitle">Welcome back to E-Court.</h2>
+          <p class="card-text">Welcome to our wesbsite.Get to know about law related stuffs at ease and connect with the
+            lawyers online.</p>
+        </div>
+        <img src="./images/lawuserdashboard.jpg" id="card-img-second-row" alt="imageUser">
+      </div>
+      <!-- Social Media Icons -->
+      <div class="card" id="secondrowcard2">
+        <h5 class="card-header" id="secrowheader">Follow Us On</h5>
+        <div class="card-body" id="socialicons">
+          <i class="fa fa-facebook" aria-hidden="true"></i>
+          <i class="fa fa-instagram" aria-hidden="true"></i>
+          <i class="fa fa-twitter" aria-hidden="true"></i>
+        </div>
+      </div>
+
+
+    </div>
+    <!-- Second Row Ends -->
+  </div>

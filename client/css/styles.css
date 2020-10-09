@@ -6,6 +6,10 @@ body {
   font-size: 16px;
 }
 
+.manipulated-text {
+  display: none;
+}
+
 .navbar-dark {
   background-color: #1e90ff;
 }
@@ -25,7 +29,8 @@ body {
   color: #fff;
 }
 
-.navbar-brand h1, .navbar-brand p {
+.navbar-brand h1,
+.navbar-brand p {
   margin: 0px 0px 0px 130px;
 }
 
@@ -37,12 +42,15 @@ body {
   text-decoration: none;
 }
 
-
-#navbar a:hover {
-  border-bottom: 5px solid #2F56B0;
-  transition: right .4s cubic-bezier(0,.5,0,1);
+#navbar a {
+  transition: border-bottom;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in;
 }
 
+#navbar a:hover {
+  border-bottom: 5px solid #2f56b0;
+}
 
 #navbar {
   margin-left: 20px;
@@ -58,26 +66,25 @@ body {
   position: relative;
 }
 
-#court-pic-div, .court-pic img {
+#court-pic-div,
+.court-pic img {
   width: 100%;
   height: 530px;
   opacity: 0.9;
 }
 
- .card {
+/* .card {
   width: 18rem;
   height: auto;
   border-bottom: 2px solid pink;
-
-  /* border: 2px solid green; */
-}
+} */
 
 .card-1 {
+  height: auto;
   position: absolute;
-  left: 20%;
+  left: 19.5%;
   bottom: -150px;
-  box-shadow: 5px 10px 28px #888888
-
+  box-shadow: 5px 10px 28px #888888;
 }
 
 .card-2 .card {
@@ -86,15 +93,15 @@ body {
   left: 39%;
   bottom: -180px;
   z-index: 1;
-  box-shadow: 5px 10px 28px #888888
+  box-shadow: 5px 10px 28px #888888;
 }
 
 .card-3 .card {
+  height: 297px;
   position: absolute;
-  left: 58%;
-  bottom: -170px;
-  box-shadow: 5px 10px 28px #888888
-
+  left: 58.5%;
+  bottom: -150px;
+  box-shadow: 5px 10px 28px #888888;
 }
 
 .card .fas {
@@ -106,12 +113,17 @@ body {
 .card-title {
   text-align: center;
   padding: 10px;
-  font-size: 1.5em;
+  font-size: 1.3em;
   font-weight: bold;
 }
 
 .card-text {
   font-style: 1.1em;
+}
+
+.card-2 .card-text,
+.card-3 .card-text {
+  margin-left: 15px;
 }
 
 .information {
@@ -196,6 +208,7 @@ footer {
   /* padding: 20px; */
   margin-right: 20px;
   font-size: 1.5em;
+  cursor: pointer;
 }
 
 .copyright {
@@ -203,9 +216,19 @@ footer {
   font-size: 1.3em;
 }
 
+.login-text {
+  margin-left: 45%;
+  font-family: cursive;
+}
+
+#registerModal img {
+  border-radius: 0;
+  width: 100%;
+  height: 100%;
+}
+
 /* Large Devices */
 @media (min-width: 1200px) {
-
 }
 
 /* Medium Devices */
@@ -239,7 +262,8 @@ footer {
     display: none;
   }
 
-  .navbar-brand h1, .navbar-brand p {
+  .navbar-brand h1,
+  .navbar-brand p {
     margin: 0px;
   }
 
@@ -247,7 +271,9 @@ footer {
     height: 250px;
   }
 
-  .card-1, .card-2, .card-3 {
+  .card-1,
+  .card-2,
+  .card-3 {
     display: none;
   }
   .small-screen-card-div {
@@ -276,5 +302,15 @@ footer {
 
   .download-section button {
     margin-top: 20px;
+  }
+
+  .login-text {
+    margin-left: 35%;
+    font-family: cursive;
+  }
+
+  #loginModal button {
+    margin-left: 20px;
+    margin-top: 5px;
   }
 }

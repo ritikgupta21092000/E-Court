@@ -1,4 +1,4 @@
-<table class="table table-stripped">
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Chapter</th>
@@ -18,7 +18,7 @@
       <% if (item.additionalInfo == undefined) { %>
       <td>-</td>
       <% } else { %>
-      <td>item.additionalInfo</td>
+      <td><%= item.additionalInfo %></td>
       <% } %>
     </tr>
     <% }) %>

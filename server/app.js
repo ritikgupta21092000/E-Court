@@ -5,6 +5,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const fileupload = require("express-fileupload");
 const cors = require("cors");
+const laws = require("./laws.json");
 
 const app = express();
 
@@ -105,7 +106,9 @@ app.get("/viewLawyers", function (req, res) {
   });
 });
 
-
+app.get("/laws", function (req, res) {
+  res.render("laws", { laws: laws });
+})
 
 app.post("/signup", function (req, res) {
   const newUser = {

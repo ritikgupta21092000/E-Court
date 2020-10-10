@@ -129,6 +129,17 @@
     });
   });
 
+  ec.allLaws = function () {
+    showLoadingSpinner();
+    $.ajax({
+      type: "GET",
+      url: serverUrl + "laws",
+      success: function (data) {
+        insertHtml("#main-content", data);
+      }
+    })
+  }
+
   function responseHandler(responseText) {
     insertHtml("#main-content", responseText);
   }

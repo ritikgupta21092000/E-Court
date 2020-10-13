@@ -1,9 +1,13 @@
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const path = require("path");
 const mongoose = require("mongoose");
 const fileupload = require("express-fileupload");
+const session = require("express-session");
+const passport = require("passport");
+const passportLocalMongoose = require("passport-local-mongoose");
 const cors = require("cors");
 const laws = require("./laws.json");
 
@@ -16,6 +20,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../client/index.html")));
 app.use(fileupload());
+app.use(session({
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(cors());
 
 mongoose.connect("mongodb://localhost:27017/ecourtDB", {
@@ -29,8 +40,7 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   password: {
-    type: String,
-    required: true,
+    type: String
   },
   admin: {
     type: Boolean,
@@ -83,8 +93,22 @@ const lawyersSchema = new mongoose.Schema({
   }
 });
 
+userSchema.plugin(passportLocalMongoose);
+
 const User = new mongoose.model("user", userSchema);
 const Lawyers = new mongoose.model("Lawyer", lawyersSchema);
+
+passport.use(User.createStrategy());
+
+passport.serializeUser(function (user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function (id, done) {
+  User.findById(id, function (err, user) {
+    done(err, user);
+  });
+});
 
 app.get("/lawyers", function (req, res) {
   Lawyers.find({}, function (err, foundLawyers) {
@@ -115,25 +139,43 @@ app.post("/signup", function (req, res) {
     username: req.body.username,
     password: req.body.password,
   };
-  User.create(newUser, function (err, result) {
+  // User.create(newUser, function (err, result) {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     res.send({ success: true });
+  //   }
+  // });
+  User.register({ username: req.body.username }, req.body.password, function (err, user) {
     if (err) {
       console.log(err);
     } else {
-      res.send({ success: true });
+      passport.authenticate("local")(req, res, function () {
+        res.send({ success: true });
+      });
     }
   });
 });
 
 app.post("/login", function (req, res) {
-  const newUser = {
+  const newUser = new User({
     username: req.body.username,
     password: req.body.password,
-  };
-  User.findOne(newUser, function (error, foundUser) {
-    if (error) {
-      console.log(error);
+  });
+  // User.findOne(newUser, function (error, foundUser) {
+  //   if (error) {
+  //     console.log(error);
+  //   } else {
+  //     res.send({ success: true, user: foundUser });
+  //   }\
+  // });
+  req.login(newUser, function (err) {
+    if (err) {
+      console.log(err);
     } else {
-      res.send({ success: true, user: foundUser });
+      passport.authenticate("local")(req, res, function () {
+        res.send({ success: true, user: req.user });
+      });
     }
   });
 });

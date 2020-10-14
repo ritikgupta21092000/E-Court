@@ -35,84 +35,14 @@
     }, 1000);
   }
 
-  admin.addLawyerPersonalDetails = function () {
-    showLoadingSpinner();
-    setTimeout(() => {
-      $ajaxUtils.sendGetRequest(addLawyerPersonalForm, responseHandler);
-    }, 1000);
-  }
-
-  admin.addLawyerProfessionalDetails = function () {
-    var data = {
-      username: $("#email").val(),
-      fullname: $("#firstName").val() + " " + $("#middleName").val() + " " + $("#lastName").val(),
-      dob: $("#dob").val(),
-      gender: $(".gender:checked").val(),
-      mobile: $("#mobile").val(),
-      state: $("#state").val(),
-      city: $("#city").val()
-    };
-    showLoadingSpinner();
-    setTimeout(() => {
-      $.ajax({
-        type: "POST",
-        data: JSON.stringify(data),
-        contentType: "application/json",
-        url: serverUrl + "addLayerPersonal",
-        success: function (data) {
-          admin.lawyerUsername = data.lawyer.username;
-          $ajaxUtils.sendGetRequest(addLawyerProfessionalForm, responseHandler);
-        }
-      });
-    }, 1000);
-  }
-
-  admin.addLawyerAllInfo = function () {
-    var speciality = [];
-    $.each($("input[id='speciality']:checked"), function () {
-      speciality.push($(this).val());
-    });
-    var file = document.getElementById("photo").files[0];
-    var certificateFile = document.getElementById("certificate").files[0];
-    var form = document.querySelector("form");
-    var formData = new FormData(form);
-    formData.append("imageFile", file);
-    formData.append("certificateFile", certificateFile);
-    var data = {
-      username: admin.lawyerUsername,
-      degreeCollege: $("#degreeCollege").val(),
-      stateOfCollege: $("#statedegreeCollege").val(),
-      yearOfPassing: $("#yop").val(),
-      startPracticeDate: $("#dosp").val(),
-      speciality: speciality
-    };
-    showLoadingSpinner();
+  admin.verifyLawyer = function () {
     $.ajax({
-      type: "POST",
-      data: JSON.stringify(data),
-      contentType: "application/json",
-      url: serverUrl + "addLayerProfessional",
+      type: "GET",
+      url: serverUrl + "verifyLawyer",
       success: function (data) {
-        console.log("Success");
+        insertHtml("#admin-content", data);
       }
     });
-
-    fetch(serverUrl + 'saveImage', {
-      method: 'POST',
-      body: formData
-    })
-      .then(response => response.json())
-      .then(data => {
-        Swal.fire(
-          "Registered " + admin.lawyerUsername + " lawyer successfully!",
-          "You clicked the button!",
-          "success"
-        );
-        $ajaxUtils.sendGetRequest(adminFrontHtml, responseHandler);
-      })
-      .catch(error => {
-        console.error(error);
-      });
   }
 
   admin.updateCaseStatusAppelant = function () {
@@ -146,6 +76,44 @@
         insertHtml("#admin-content", data);
       }
     })
+  }
+
+  admin.viewPic = function (url) {
+    window.open(url, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes, left = 300, top = 100, width = 500, height = 500, scrollbars = yes");
+  }
+
+  admin.viewCertificate = function (url) {
+    window.open(url, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes, left = 300, top = 100, width = 500, height = 500, scrollbars = yes");
+  }
+
+  admin.rejectApplication = function (id) {
+    var message = prompt("Reason for Rejecting Application");
+    var newdata = {
+      id: id,
+      message: message
+    };
+    $.ajax({
+      type: "POST",
+      url: serverUrl + "rejectApplication",
+      data: newdata,
+      success: function (data) {
+        admin.loadFrontPage();
+      }
+    });
+  }
+
+  admin.acceptApplication = function (id) {
+    var newdata = {
+      id: id
+    };
+    $.ajax({
+      type: "POST",
+      url: serverUrl + "acceptApplication",
+      data: newdata,
+      success: function (data) {
+        admin.loadFrontPage();
+      }
+    });
   }
 
   function responseHandler(responseText) {

@@ -8,6 +8,8 @@ const fileupload = require("express-fileupload");
 const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
+const nodemailer = require("nodemailer");
+var generator = require("generate-password");
 const cors = require("cors");
 const laws = require("./laws.json");
 
@@ -51,6 +53,13 @@ const userSchema = new mongoose.Schema({
 const lawyersSchema = new mongoose.Schema({
   username: {
     type: String
+  },
+  password: {
+    type: String
+  },
+  status: {
+    type: Boolean,
+    default: false
   },
   fullname: {
     type: String
@@ -110,8 +119,16 @@ passport.deserializeUser(function (id, done) {
   });
 });
 
+var transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "ecourt834@gmail.com",
+    pass: "riteshritikrohan"
+  }
+});
+
 app.get("/lawyers", function (req, res) {
-  Lawyers.find({}, function (err, foundLawyers) {
+  Lawyers.find({ status: true }, function (err, foundLawyers) {
     if (err) {
       console.log(err);
     } else {
@@ -121,7 +138,7 @@ app.get("/lawyers", function (req, res) {
 });
 
 app.get("/viewLawyers", function (req, res) {
-  Lawyers.find({}, function (err, foundResult) {
+  Lawyers.find({ status: true }, function (err, foundResult) {
     if (err) {
       console.log(err);
     } else {
@@ -132,20 +149,23 @@ app.get("/viewLawyers", function (req, res) {
 
 app.get("/laws", function (req, res) {
   res.render("laws", { laws: laws });
-})
+});
+
+app.get("/verifyLawyer", function (req, res) {
+  Lawyers.find({ status: false }, function (err, foundLawyer) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("verifyLawyer", { lawyers: foundLawyer });
+    }
+  });
+});
 
 app.post("/signup", function (req, res) {
   const newUser = {
     username: req.body.username,
     password: req.body.password,
   };
-  // User.create(newUser, function (err, result) {
-  //   if (err) {
-  //     console.log(err);
-  //   } else {
-  //     res.send({ success: true });
-  //   }
-  // });
   User.register({ username: req.body.username }, req.body.password, function (err, user) {
     if (err) {
       console.log(err);
@@ -158,17 +178,11 @@ app.post("/signup", function (req, res) {
 });
 
 app.post("/login", function (req, res) {
+  console.log(req.body);
   const newUser = new User({
     username: req.body.username,
     password: req.body.password,
   });
-  // User.findOne(newUser, function (error, foundUser) {
-  //   if (error) {
-  //     console.log(error);
-  //   } else {
-  //     res.send({ success: true, user: foundUser });
-  //   }\
-  // });
   req.login(newUser, function (err) {
     if (err) {
       console.log(err);
@@ -243,6 +257,56 @@ app.post('/saveImage', (req, res) => {
           });
         }
       });
+    }
+  });
+});
+
+app.post("/acceptApplication", function (req, res) {
+  var password = generator.generate({
+    length: 10,
+    numbers: true
+  });
+  Lawyers.findByIdAndUpdate(req.body.id, { status: true, password: password }, function (err, foundLawyer) {
+    if (err) {
+      console.log(err);
+    } else {
+      var mailOptions = {
+        from: "ecourt834@gmail.com",
+        to: foundLawyer.username,
+        subject: "Approval of Application on E-Court",
+        html: "<b>Congrats! " + foundLawyer.fullname + " Your Application is approved by E-Court</b><br>You can Access your account by using:<br>Username: " + foundLawyer.username + "<br>Password: " + password
+      };
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log(info.response);
+        }
+      });
+      res.json({ success: true });
+    }
+  });
+});
+
+app.post("/rejectApplication", function (req, res) {
+  Lawyers.findByIdAndRemove(req.body.id, function (err, removedLawyer) {
+    if (err) {
+      console.log(err);
+    } else {
+      var mailOptions = {
+        from: "ecourt834@gmail.com",
+        to: removedLawyer.username,
+        subject: "Rejection of Application on E-Court",
+        html: "<b>Oops! Your Application is rejected due to</b> " + req.body.message
+      };
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log(info.response);
+        }
+      });
+      res.json({ remove: true });
     }
   });
 });

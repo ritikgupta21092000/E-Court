@@ -122,8 +122,8 @@ passport.deserializeUser(function (id, done) {
 var transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "ecourt834@gmail.com",
-    pass: "riteshritikrohan"
+    user: process.env.EMAIL_ID,
+    pass: process.env.PASSWORD
   }
 });
 

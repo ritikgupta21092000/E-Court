@@ -192,7 +192,9 @@
       contentType: "application/json",
       url: serverUrl + "login",
       success: function (data) {
-        if (data.user == null) {
+        console.log(data);
+        if (data.success == false) {
+          console.log(data.success);
           Swal.fire({
             icon: "error",
             title: "Oops...",
@@ -207,8 +209,8 @@
             "You clicked the button!",
             "success"
           );
-          $(".manipulated-text a.nav-link").text(data.user.username);
-          $(".manipulated-text").removeClass("manipulated-text");
+          $(".trigger-class a.nav-link").text(data.user.username);
+          $(".trigger-class").removeClass("manipulated-text");
         }
       },
     });
@@ -219,6 +221,24 @@
     setTimeout(function () {
       $ajaxUtils.sendGetRequest(authenticationHtml, responseHandler);
     }, 1000)
+  }
+
+  ec.logout = function () {
+    $.ajax({
+      type: "get",
+      url: serverUrl + "logout",
+      success: function (data) {
+        if (data.logout) {
+          $(".trigger-class a.nav-link").text("");
+          $(".trigger-class").addClass("manipulated-text");
+          Swal.fire(
+            "Logged Out Successfully!",
+            "You clicked the button!",
+            "success"
+          );
+        }
+      }
+    });
   }
 
   ec.addLawyerPersonalDetails = function () {

@@ -15,6 +15,12 @@ const laws = require("./laws.json");
 
 const app = express();
 
+const User = require("./models/users");
+const Lawyers = require("./models/lawyers");
+const Appelant = require("./models/appelant");
+const Defendant = require("./models/defendant");
+const Case = require("./models/case");
+
 var lawyerUsername = "";
 
 app.set("view engine", "ejs");
@@ -36,76 +42,7 @@ mongoose.connect("mongodb://localhost:27017/ecourtDB", {
   useUnifiedTopology: true,
 });
 
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String
-  },
-  admin: {
-    type: Boolean,
-    default: false,
-  },
-});
 
-const lawyersSchema = new mongoose.Schema({
-  username: {
-    type: String
-  },
-  password: {
-    type: String
-  },
-  status: {
-    type: Boolean,
-    default: false
-  },
-  fullname: {
-    type: String
-  },
-  dob: {
-    type: String
-  },
-  gender: {
-    type: String
-  },
-  mobile: {
-    type: Number
-  },
-  state: {
-    type: String
-  },
-  city: {
-    type: String
-  },
-  degreeCollege: {
-    type: String
-  },
-  stateOfCollege: {
-    type: String
-  },
-  yearOfPassing: {
-    type: Number
-  },
-  startPracticeDate: {
-    type: String
-  },
-  speciality: {
-    type: Array
-  },
-  photoUrl: {
-    type: String
-  },
-  degreePhotoUrl: {
-    type: String
-  }
-});
-
-userSchema.plugin(passportLocalMongoose);
-
-const User = new mongoose.model("user", userSchema);
-const Lawyers = new mongoose.model("Lawyer", lawyersSchema);
 
 passport.use(User.createStrategy());
 
@@ -161,6 +98,11 @@ app.get("/verifyLawyer", function (req, res) {
   });
 });
 
+app.get("/logout", function (req, res) {
+  req.logOut();
+  res.json({ logout: true });
+});
+
 app.post("/signup", function (req, res) {
   const newUser = {
     username: req.body.username,
@@ -177,8 +119,7 @@ app.post("/signup", function (req, res) {
   });
 });
 
-app.post("/login", function (req, res) {
-  console.log(req.body);
+app.post("/login", passport.authenticate("local"), function (req, res) {
   const newUser = new User({
     username: req.body.username,
     password: req.body.password,

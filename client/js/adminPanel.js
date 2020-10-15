@@ -7,6 +7,7 @@
   var updateCaseStatusDefendantForm = "snippets/updateCaseStatus-Defendant.html";
   var updateCaseForm = "snippets/updateCaseStatus-Case.html";
 
+  var clientUrl = "http://localhost:3000/client/index.html";
   var serverUrl = "http://localhost:5000/";
 
   admin.lawyerUsername = "";
@@ -112,6 +113,20 @@
       data: newdata,
       success: function (data) {
         admin.loadFrontPage();
+      }
+    });
+  }
+
+  admin.logout = function () {
+    $.ajax({
+      type: "get",
+      url: serverUrl + "logout",
+      success: function (data) {
+        if (data.logout) {
+          $(".trigger-class a.nav-link").text("");
+          $(".trigger-class").addClass("manipulated-text");
+          location.replace(clientUrl);
+        }
       }
     });
   }

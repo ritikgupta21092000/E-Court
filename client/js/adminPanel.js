@@ -1,11 +1,9 @@
 (function (window) {
   var admin = {};
   var adminFrontHtml = "snippets/admin-front-snippet.html";
-  var addLawyerPersonalForm = "snippets/addLawyer-Personal.html";
-  var addLawyerProfessionalForm = "snippets/addLawyer-Professional.html";
-  var updateCaseStatusAppelantForm = "snippets/updateCaseStatus-Appelant.html";
-  var updateCaseStatusDefendantForm = "snippets/updateCaseStatus-Defendant.html";
-  var updateCaseForm = "snippets/updateCaseStatus-Case.html";
+  var addCaseStatusAppelantForm = "snippets/addCaseStatus-Appelant.html";
+  var addCaseStatusDefendantForm = "snippets/addCaseStatus-Defendant.html";
+  var addCaseForm = "snippets/addCaseStatus-Case.html";
 
   var clientUrl = "http://localhost:3000/client/index.html";
   var serverUrl = "http://localhost:5000/";
@@ -46,25 +44,70 @@
     });
   }
 
+  admin.addCaseStatusAppelant = function () {
+    showLoadingSpinner();
+    setTimeout(function () {
+      $ajaxUtils.sendGetRequest(addCaseStatusAppelantForm, responseHandler);
+    }, 1000);
+  }
+
+  admin.addCaseStatusDefendant = function () {
+    var data = {
+      fullname: document.getElementsByClassName("firstName")[0].value + " " + $(".middleName").val() + " " + $(".lastName").val(),
+      address: $(".address").val(),
+      username: $(".username").val(),
+      lawyerId: $(".lawyerId").val()
+    };
+    showLoadingSpinner();
+    setTimeout(function () {
+      $.ajax({
+        type: "post",
+        url: serverUrl + "updateAppelantCase",
+        data: data,
+        success: function (response) {
+          $ajaxUtils.sendGetRequest(addCaseStatusDefendantForm, responseHandler);
+        }
+      });
+    }, 1000);
+  }
+
+  admin.addCase = function () {
+    var data = {
+      fullname: document.getElementsByClassName("firstName")[0].value + " " + $(".middleName").val() + " " + $(".lastName").val(),
+      address: $(".address").val(),
+      username: $(".username").val(),
+      lawyerId: $(".lawyerId").val()
+    };
+    showLoadingSpinner();
+    setTimeout(function () {
+      $.ajax({
+        type: "post",
+        url: serverUrl + "updateDefendantCase",
+        data: data,
+        success: function (response) {
+          $ajaxUtils.sendGetRequest(addCaseForm, responseHandler);
+        }
+      });
+    }, 1000);
+  }
+
+  admin.getLawyerId = function () {
+    var data = {
+      lawyerUsername: $(".lawyerUsername").val()
+    };
+    $.ajax({
+      type: "post",
+      url: serverUrl + "getLawyerId",
+      data: data,
+      success: function (response) {
+        console.log(response.lawyerId);
+        document.getElementsByClassName("lawyerId")[0].value = response.lawyerId;
+      }
+    });
+  }
+
   admin.updateCaseStatusAppelant = function () {
-    showLoadingSpinner();
-    setTimeout(function () {
-      $ajaxUtils.sendGetRequest(updateCaseStatusAppelantForm, responseHandler);
-    }, 1000);
-  }
-
-  admin.updateCaseStatusDefendant = function () {
-    showLoadingSpinner();
-    setTimeout(function () {
-      $ajaxUtils.sendGetRequest(updateCaseStatusDefendantForm, responseHandler);
-    }, 1000);
-  }
-
-  admin.updateCase = function () {
-    showLoadingSpinner();
-    setTimeout(function () {
-      $ajaxUtils.sendGetRequest(updateCaseForm, responseHandler);
-    }, 1000);
+    console.log("Inside of updateCaseStatusAppelant");
   }
 
   admin.viewAllLawyers = function () {
@@ -73,7 +116,6 @@
       type: "GET",
       url: serverUrl + "viewLawyers",
       success: function (data) {
-        console.log(data);
         insertHtml("#admin-content", data);
       }
     })

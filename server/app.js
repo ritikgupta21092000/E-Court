@@ -22,6 +22,8 @@ const Defendant = require("./models/defendant");
 const Case = require("./models/case");
 
 var lawyerUsername = "";
+var appelantId = "";
+var defendantId = "";
 
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
@@ -248,6 +250,43 @@ app.post("/rejectApplication", function (req, res) {
         }
       });
       res.json({ remove: true });
+    }
+  });
+});
+
+app.post("/updateAppelantCase", function (req, res) {
+  const { fullname, username, address, lawyerId } = req.body;
+  Appelant.create({ fullname, username, address, lawyerId }, function (err, insertedData) {
+    if (err) {
+      console.log(err);
+    } else {
+      appelantId = insertedData._id;
+      console.log(appelantId);
+      res.send({ success: true });
+    }
+  });
+});
+
+app.post("/updateDefendantCase", function (req, res) {
+  const { fullname, username, address, lawyerId } = req.body;
+  Defendant.create({ fullname, username, address, lawyerId }, function (err, insertedData) {
+    if (err) {
+      console.log(err);
+    } else {
+      defendantId = insertedData._id;
+      console.log(defendantId);
+      res.send({ success: true });
+    }
+  });
+});
+
+app.post("/getLawyerId", function (req, res) {
+  Lawyers.findOne({ username: req.body.lawyerUsername }, function (err, foundLawyer) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(foundLawyer);
+      res.send({ lawyerId: foundLawyer._id });
     }
   });
 });

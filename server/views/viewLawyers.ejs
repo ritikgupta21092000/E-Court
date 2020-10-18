@@ -1,7 +1,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Sr No</th>
+      <th>Id</th>
       <th>Pic</th>
       <th>FullName</th>
       <th>Email</th>
@@ -13,7 +13,7 @@
   <tbody>
     <% lawyers.forEach(function(lawyer) { %>
     <tr>
-      <td><%= lawyers.indexOf(lawyer) + 1 %></td>
+      <td><%= lawyer._id %></td>
       <td><img style="border-radius: 50%;" src="<%= lawyer.photoUrl %>" width="100px" height="100px" alt="Ritesh"></td>
       <td><%= lawyer.fullname %></td>
       <td><%= lawyer.username %></td>

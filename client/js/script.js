@@ -86,7 +86,7 @@
       type: "get",
       url: serverUrl + "viewAllCases",
       success: function (response) {
-        console.log(response);
+        dashboardHandler(response);
       }
     });
   }

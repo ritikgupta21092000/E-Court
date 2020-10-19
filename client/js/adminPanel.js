@@ -62,7 +62,7 @@
     setTimeout(function () {
       $.ajax({
         type: "post",
-        url: serverUrl + "updateAppelantCase",
+        url: serverUrl + "addAppelantCase",
         data: data,
         success: function (response) {
           $ajaxUtils.sendGetRequest(addCaseStatusDefendantForm, responseHandler);
@@ -82,7 +82,7 @@
     setTimeout(function () {
       $.ajax({
         type: "post",
-        url: serverUrl + "updateDefendantCase",
+        url: serverUrl + "addDefendantCase",
         data: data,
         success: function (response) {
           $ajaxUtils.sendGetRequest(addCaseForm, responseHandler);

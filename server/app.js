@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const path = require("path");
 const mongoose = require("mongoose");
+const ObjectId = require("mongoose").Types.ObjectId;
 const fileupload = require("express-fileupload");
 const session = require("express-session");
 const passport = require("passport");
@@ -106,7 +107,26 @@ app.get("/logout", function (req, res) {
 });
 
 app.get("/viewAllCases", function (req, res) {
-  console.log(sess.passport.user);
+  var username = sess.username;
+  var cases = [];
+  Case.find({})
+    .populate("appelant")
+    .populate("defendant")
+    .then((foundCase) => {
+      foundCase.forEach(element => {
+        if (element.appelant.username === username) {
+          cases.push(element);
+        } else if (element.defendant.username === username) {
+          cases.push(element);
+        } else {
+          console.log("User Not Found");
+        }
+      });
+      res.render("viewCases", { cases: cases });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 });
 
 app.post("/signup", function (req, res) {
@@ -136,7 +156,7 @@ app.post("/login", function (req, res) {
     } else {
       passport.authenticate("local")(req, res, function () {
         sess = req.session;
-        // sess.username = req.user.username;
+        sess.username = req.user.username;
         res.send({ success: true, user: req.user });
       });
     }
@@ -260,7 +280,7 @@ app.post("/rejectApplication", function (req, res) {
   });
 });
 
-app.post("/updateAppelantCase", function (req, res) {
+app.post("/addAppelantCase", function (req, res) {
   const { fullname, username, address, lawyerId } = req.body;
   Appelant.create({ fullname, username, address, lawyerId }, function (err, insertedData) {
     if (err) {
@@ -272,7 +292,7 @@ app.post("/updateAppelantCase", function (req, res) {
   });
 });
 
-app.post("/updateDefendantCase", function (req, res) {
+app.post("/addDefendantCase", function (req, res) {
   const { fullname, username, address, lawyerId } = req.body;
   Defendant.create({ fullname, username, address, lawyerId }, function (err, insertedData) {
     if (err) {

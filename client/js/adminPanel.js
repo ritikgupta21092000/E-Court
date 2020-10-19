@@ -91,6 +91,30 @@
     }, 1000);
   }
 
+  admin.registerCase = function () {
+    var codes = document.getElementsByClassName("codes")[0].value.split(" ");
+    var data = {
+      complaint: document.getElementsByClassName("complaint")[0].value,
+      dateOfComplaint: document.getElementsByClassName("dateOfComplaint")[0].value,
+      codes: codes,
+      status: document.querySelector('input[name="status"]:checked').value,
+      lastCourtOfHearing: document.getElementsByClassName("lastCourtOfHearing")[0].value,
+      nextCourtOfHearing: document.getElementsByClassName("nextCourtOfHearing")[0].value,
+      lastDateOfHearing: document.getElementsByClassName("lastDateOfHearing")[0].value,
+      nextDateOfHearing: document.getElementsByClassName("nextDateOfHearing")[0].value,
+    };
+    showLoadingSpinner();
+    $.ajax({
+      type: "post",
+      url: serverUrl + "registerCase",
+      data: data,
+      success: function (response) {
+        alert("Added Lawyer Successfully");
+        $ajaxUtils.sendGetRequest(adminFrontHtml, responseHandler);
+      }
+    });
+  }
+
   admin.getLawyerId = function () {
     var data = {
       lawyerUsername: $(".lawyerUsername").val()
@@ -100,8 +124,17 @@
       url: serverUrl + "getLawyerId",
       data: data,
       success: function (response) {
-        console.log(response.lawyerId);
-        document.getElementsByClassName("lawyerId")[0].value = response.lawyerId;
+        if (response.lawyerId) {
+          document.getElementsByClassName("lawyerId")[0].value = response.lawyerId;
+          document.getElementsByClassName("lawyerId")[0].disabled = true;
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Please Enter Correct Lawyer Username!",
+            footer: "<a href>Why do I have this issue?</a>",
+          });
+        }
       }
     });
   }

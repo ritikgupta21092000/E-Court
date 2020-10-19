@@ -43,10 +43,18 @@
       </div>
       <div class="form-row">
         <div class="col">
-          <label for="lawyerName">Username:<span class="compulsory">*</span></label>
+          <label for="lawyerName">Defendant Username:<span class="compulsory">*</span></label>
         </div>
         <div class="col">
           <input type="text" class="form-control username" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <label for="lawyerName">Lawyer Username:<span class="compulsory">*</span></label>
+        </div>
+        <div class="col">
+          <input type="text" onchange="$admin.getLawyerId();" class="form-control lawyerUsername" required>
         </div>
       </div>
 

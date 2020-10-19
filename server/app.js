@@ -105,6 +105,10 @@ app.get("/logout", function (req, res) {
   res.json({ logout: true });
 });
 
+app.get("/viewAllCases", function (req, res) {
+  console.log(sess.passport.user);
+});
+
 app.post("/signup", function (req, res) {
   const newUser = {
     username: req.body.username,
@@ -121,7 +125,7 @@ app.post("/signup", function (req, res) {
   });
 });
 
-app.post("/login", passport.authenticate("local"), function (req, res) {
+app.post("/login", function (req, res) {
   const newUser = new User({
     username: req.body.username,
     password: req.body.password,
@@ -131,6 +135,8 @@ app.post("/login", passport.authenticate("local"), function (req, res) {
       console.log(err);
     } else {
       passport.authenticate("local")(req, res, function () {
+        sess = req.session;
+        // sess.username = req.user.username;
         res.send({ success: true, user: req.user });
       });
     }
@@ -261,7 +267,6 @@ app.post("/updateAppelantCase", function (req, res) {
       console.log(err);
     } else {
       appelantId = insertedData._id;
-      console.log(appelantId);
       res.send({ success: true });
     }
   });
@@ -274,7 +279,6 @@ app.post("/updateDefendantCase", function (req, res) {
       console.log(err);
     } else {
       defendantId = insertedData._id;
-      console.log(defendantId);
       res.send({ success: true });
     }
   });
@@ -285,8 +289,33 @@ app.post("/getLawyerId", function (req, res) {
     if (err) {
       console.log(err);
     } else {
-      console.log(foundLawyer);
-      res.send({ lawyerId: foundLawyer._id });
+      if (foundLawyer) {
+        res.send({ lawyerId: foundLawyer._id });
+      } else {
+        res.send({ lawyerId: "" });
+      }
+    }
+  });
+});
+
+app.post("/registerCase", function (req, res) {
+  var data = {
+    complaint: req.body.complaint,
+    dateOfComplaint: req.body.dateOfComplaint,
+    codes: req.body.codes,
+    status: req.body.status,
+    lastCourtOfHearing: req.body.lastCourtOfHearing,
+    nextCourtOfHearing: req.body.nextCourtOfHearing,
+    lastDateOfHearing: req.body.lastDateOfHearing,
+    nextDateOfHearing: req.body.nextDateOfHearing,
+    appelant: appelantId,
+    defendant: defendantId
+  };
+  Case.create(data, function (err, insertedData) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send({ insertedData });
     }
   });
 });

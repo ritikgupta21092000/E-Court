@@ -7,8 +7,13 @@
   var authenticationHtml = "snippets/authentication.html"
   var addLawyerPersonalForm = "snippets/addLawyer-Personal.html";
   var addLawyerProfessionalForm = "snippets/addLawyer-Professional.html";
+  var userDashboardFrontHtml = "snippets/user-dashboard-front.html";
+  var privacyPolicyHtml = "snippets/privacyPolicy-snippet.html";
+
   var adminPanelUrl = "http://localhost:3000/client/adminPanel.html";
   var serverUrl = "http://localhost:5000/";
+
+  ec.username = "";
 
   function insertHtml(selector, html) {
     document.querySelector(selector).innerHTML = html;
@@ -62,10 +67,37 @@
   };
 
   ec.loadUserDashboard = function () {
-    showLoadingSpinner();
-    setTimeout(() => {
+    if (ec.username) {
+      showLoadingSpinner();
       $ajaxUtils.sendGetRequest(userDashboardHtml, responseHandler);
-    }, 1000);
+      $ajaxUtils.sendGetRequest(userDashboardFrontHtml, dashboardHandler);
+    } else {
+      Swal.fire("Please Login First");
+      $ajaxUtils.sendGetRequest(homeHtml, responseHandler);
+    }
+  }
+
+  ec.caseStatus = function () {
+    $ajaxUtils.sendGetRequest(userDashboardFrontHtml, dashboardHandler);
+  }
+
+  ec.viewAllCases = function () {
+    $.ajax({
+      type: "get",
+      url: serverUrl + "viewAllCases",
+      success: function (response) {
+        console.log(response);
+      }
+    });
+  }
+
+  ec.privacyPolicy = function () {
+    // showLoadingSpinner();
+    $ajaxUtils.sendGetRequest(privacyPolicyHtml, dashboardHandler);
+  }
+
+  function dashboardHandler(responseText) {
+    insertHtml("#user-dashboard-content", responseText);
   }
 
   ec.allLaws = function () {
@@ -168,6 +200,7 @@
         } else if (data.user.admin === true) {
           location.replace(adminPanelUrl);
         } else if (data.user.admin === false) {
+          ec.username = data.user.username;
           Swal.fire(
             "LoggedIn Successfully!",
             "You clicked the button!",
@@ -229,6 +262,7 @@
       url: serverUrl + "logout",
       success: function (data) {
         if (data.logout) {
+          ec.username = "";
           $(".trigger-class a.nav-link").text("");
           $(".trigger-class").addClass("manipulated-text");
           Swal.fire(
@@ -236,6 +270,7 @@
             "You clicked the button!",
             "success"
           );
+          ec.loadHomePage();
         }
       }
     });

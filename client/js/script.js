@@ -4,7 +4,7 @@
   var contactHtml = "snippets/contact-snippet.html";
   var aboutHtml = "snippets/about-snippet.html";
   var userDashboardHtml = "snippets/user-dashboard-snippet.html";
-  var authenticationHtml = "snippets/authentication.html"
+  var authenticationHtml = "snippets/authentication.html";
   var addLawyerPersonalForm = "snippets/addLawyer-Personal.html";
   var addLawyerProfessionalForm = "snippets/addLawyer-Professional.html";
   var userDashboardFrontHtml = "snippets/user-dashboard-front.html";
@@ -108,7 +108,7 @@
       success: function (data) {
         insertHtml("#main-content", data);
       }
-    })
+    });
   }
 
   ec.register = function (e) {
@@ -147,49 +147,16 @@
     data.username = $("#username").val();
     data.password = $("#password").val();
 
-    // let headers = new Headers();
-    // headers.append("Access-Control-Allow-Origin", "*");
-    // headers.append("Content-Type", "application/json");
 
-    // fetch(serverUrl + "login", {
-    //   method: "post",
-    //   mode: "cors",
-    //   headers: headers,
-    //   body: {
-    //     data: JSON.stringify(data)
-    //   }
-    // })
-    //   .then((data) => data.json())
-    //   .then((data) => {
-    //     if (data.user == null) {
-    //       Swal.fire({
-    //         icon: "error",
-    //         title: "Oops...",
-    //         text: "Something went wrong!",
-    //         footer: "<a href>Why do I have this issue?</a>",
-    //       });
-    //     } else if (data.user.admin === true) {
-    //       location.replace(adminPanelUrl);
-    //     } else if (data.user.admin === false) {
-    //       Swal.fire(
-    //         "LoggedIn Successfully!",
-    //         "You clicked the button!",
-    //         "success"
-    //       );
-    //       $(".manipulated-text a.nav-link").text(data.user.username);
-    //       $(".manipulated-text").removeClass("manipulated-text");
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-
-    $.ajax({
-      type: "POST",
-      data: JSON.stringify(data),
-      contentType: "application/json",
-      url: serverUrl + "login",
-      success: function (data) {
+    fetch(serverUrl + "login", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then((data) => data.json())
+      .then((data) => {
         if (data.user == null) {
           Swal.fire({
             icon: "error",
@@ -209,8 +176,38 @@
           $(".manipulated-text a.nav-link").text(data.user.username);
           $(".manipulated-text").removeClass("manipulated-text");
         }
-      },
-    });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    // $.ajax({
+    //   type: "POST",
+    //   data: JSON.stringify(data),
+    //   contentType: "application/json",
+    //   url: serverUrl + "login",
+    //   success: function (data) {
+    //     if (data.user == null) {
+    //       Swal.fire({
+    //         icon: "error",
+    //         title: "Oops...",
+    //         text: "Something went wrong!",
+    //         footer: "<a href>Why do I have this issue?</a>",
+    //       });
+    //     } else if (data.user.admin === true) {
+    //       location.replace(adminPanelUrl);
+    //     } else if (data.user.admin === false) {
+    //       ec.username = data.user.username;
+    //       Swal.fire(
+    //         "LoggedIn Successfully!",
+    //         "You clicked the button!",
+    //         "success"
+    //       );
+    //       $(".manipulated-text a.nav-link").text(data.user.username);
+    //       $(".manipulated-text").removeClass("manipulated-text");
+    //     }
+    //   },
+    // });
   }
 
   $("#login").click(function (e) {

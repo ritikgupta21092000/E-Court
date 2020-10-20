@@ -32,7 +32,6 @@
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         document.getElementsByClassName("noOfLawyers")[0].innerHTML = data.foundLawyer;
       })
       .catch(error => {
@@ -221,6 +220,42 @@
           $(".trigger-class").addClass("manipulated-text");
           location.replace(clientUrl);
         }
+      }
+    });
+  }
+
+  admin.registeredCases = function () {
+    fetch(serverUrl + "registeredCases", {
+      method: "get"
+    })
+      .then(res => res.text())
+      .then(data => {
+        console.log(data);
+        insertHtml("#admin-content", data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  admin.pendingCases = function () {
+    $.ajax({
+      type: "get",
+      url: serverUrl + "pendingCases",
+      success: function (data) {
+        console.log(data);
+        responseHandler(data);
+      }
+    });
+  }
+
+  admin.solvedCases = function () {
+    $.ajax({
+      type: "get",
+      url: serverUrl + "solvedCases",
+      success: function (data) {
+        console.log(data);
+        responseHandler(data);
       }
     });
   }

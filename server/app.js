@@ -205,6 +205,42 @@ app.get("/totalNumberOfCases", function (req, res) {
   });
 });
 
+app.get("/registeredCases", function (req, res) {
+  Case.find({})
+    .populate("appelant")
+    .populate("defendant")
+    .then(foundCase => {
+      res.render("totalCases", { cases: foundCase });
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
+
+app.get("/pendingCases", function (req, res) {
+  Case.find({ status: "Ongoing" })
+    .populate("appelant")
+    .populate("defendant")
+    .then(foundCase => {
+      res.render("totalCases", { cases: foundCase });
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
+
+app.get("/solvedCases", function (req, res) {
+  Case.find({ status: "Closed" })
+    .populate("appelant")
+    .populate("defendant")
+    .then(foundCase => {
+      res.render("totalCases", { cases: foundCase });
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
+
 app.post("/signup", function (req, res) {
   const newUser = {
     username: req.body.username,

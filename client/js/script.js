@@ -71,6 +71,26 @@
       showLoadingSpinner();
       $ajaxUtils.sendGetRequest(userDashboardHtml, responseHandler);
       $ajaxUtils.sendGetRequest(userDashboardFrontHtml, dashboardHandler);
+      fetch(serverUrl + "getRunningCases", {
+        method: "get"
+      })
+        .then(res => res.json())
+        .then(data => {
+          document.getElementsByClassName("noOfCasesRunning")[0].innerHTML = data.ongoingCases;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      fetch(serverUrl + "getClosedCases", {
+        method: "get"
+      })
+        .then(res => res.json())
+        .then(data => {
+          document.getElementsByClassName("noOfCasesClosed")[0].innerHTML = data.closedCases;
+        })
+        .catch(error => {
+          console.log(error);
+        });
     } else {
       Swal.fire("Please Login First");
       $ajaxUtils.sendGetRequest(homeHtml, responseHandler);
@@ -79,6 +99,26 @@
 
   ec.caseStatus = function () {
     $ajaxUtils.sendGetRequest(userDashboardFrontHtml, dashboardHandler);
+    fetch(serverUrl + "getRunningCases", {
+      method: "get"
+    })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementsByClassName("noOfCasesRunning")[0].innerHTML = data.ongoingCases;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    fetch(serverUrl + "getClosedCases", {
+      method: "get"
+    })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementsByClassName("noOfCasesClosed")[0].innerHTML = data.closedCases;
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   ec.viewAllCases = function () {

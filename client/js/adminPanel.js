@@ -21,17 +21,36 @@
   }
 
   document.addEventListener("DOMContentLoaded", function (event) {
-    showLoadingSpinner();
-    setTimeout(() => {
-      $ajaxUtils.sendGetRequest(adminFrontHtml, responseHandler);
-    }, 1000);
+    admin.loadFrontPage();
   });
 
   admin.loadFrontPage = function () {
     showLoadingSpinner();
-    setTimeout(() => {
-      $ajaxUtils.sendGetRequest(adminFrontHtml, responseHandler);
-    }, 1000);
+    $ajaxUtils.sendGetRequest(adminFrontHtml, responseHandler);
+    fetch(serverUrl + "noOfLawyers", {
+      method: "get"
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        document.getElementsByClassName("noOfLawyers")[0].innerHTML = data.foundLawyer;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    fetch(serverUrl + "totalNumberOfCases", {
+      method: "get"
+    })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementsByClassName("noOfCasesRunning")[0].innerHTML = data.ongoingCases;
+        document.getElementsByClassName("noOfCasesClosed")[0].innerHTML = data.closedCases;
+        document.getElementsByClassName("totalNumberOfCasesRegistered")[0].innerHTML = data.ongoingCases + data.closedCases;
+        document.getElementsByClassName("noOfUsers")[0].innerHTML = data.user;
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   admin.verifyLawyer = function () {

@@ -45,8 +45,6 @@ mongoose.connect("mongodb://localhost:27017/ecourtDB", {
   useUnifiedTopology: true,
 });
 
-
-
 passport.use(User.createStrategy());
 
 passport.serializeUser(function (user, done) {
@@ -127,6 +125,84 @@ app.get("/viewAllCases", function (req, res) {
     .catch((error) => {
       console.log(error);
     });
+});
+
+app.get("/getRunningCases", function (req, res) {
+  var username = sess.username;
+  var ongoingCases = [];
+  Case.find({ status: "Ongoing" })
+    .populate("appelant")
+    .populate("defendant")
+    .then((foundCase) => {
+      foundCase.forEach(element => {
+        if (element.appelant.username === username) {
+          ongoingCases.push(element);
+        } else if (element.defendant.username === username) {
+          ongoingCases.push(element);
+        } else {
+          console.log("User Not Found");
+        }
+      });
+      res.send({ ongoingCases: ongoingCases.length });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+app.get("/getClosedCases", function (req, res) {
+  var username = sess.username;
+  var closedCases = [];
+  Case.find({ status: "Closed" })
+    .populate("appelant")
+    .populate("defendant")
+    .then((foundCase) => {
+      foundCase.forEach(element => {
+        if (element.appelant.username === username) {
+          closedCases.push(element);
+        } else if (element.defendant.username === username) {
+          closedCases.push(element);
+        } else {
+          console.log("User Not Found");
+        }
+      });
+      res.send({ closedCases: closedCases.length });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+app.get("/noOfLawyers", function (req, res) {
+  Lawyers.find({}, function (err, foundLawyer) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send({ foundLawyer: foundLawyer.length });
+    }
+  });
+});
+
+app.get("/totalNumberOfCases", function (req, res) {
+  Case.find({ status: "Ongoing" }, function (foundOngoingCasesErr, foundOngoingCases) {
+    if (foundOngoingCasesErr) {
+      console.log(err);
+    } else {
+      Case.find({ status: "Closed" }, function (foundClosedCasesErr, foundClosedCases) {
+        if (foundClosedCasesErr) {
+          console.log(err);
+        } else {
+          User.find({}, function (error, foundUser) {
+            if (error) {
+              console.log(error);
+            } else {
+              res.send({ ongoingCases: foundOngoingCases.length, closedCases: foundClosedCases.length, user: foundUser.length });
+            }
+          });
+        }
+      });
+    }
+  });
 });
 
 app.post("/signup", function (req, res) {

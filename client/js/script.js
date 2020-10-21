@@ -380,10 +380,11 @@
       username: ec.username,
       caseInfo: document.getElementsByClassName("caseInfo")[0].value,
       typeOfUser: document.querySelector("input[name='type']:checked").value,
-      phoneNo: parseInt(document.getElementsByClassName("phoneNo")[0].value),
+      phoneNo: document.getElementsByClassName("phoneNo")[0].value,
       emailId: document.getElementsByClassName("emailId")[0].value,
       lawyerId: ec.lawyerId
     };
+    showLoadingSpinner();
     fetch(serverUrl + "userAppointment", {
       method: "post",
       headers: {

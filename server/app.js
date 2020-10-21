@@ -471,7 +471,7 @@ app.post("/userAppointment", function (req, res) {
         if (error) {
           console.log(error);
         } else {
-          res.json({ posted: "successfully" });
+          res.send({ posted: "successfully" });
         }
       });
     }

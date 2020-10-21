@@ -128,7 +128,7 @@
       data: data,
       success: function (response) {
         alert("Added Lawyer Successfully");
-        $ajaxUtils.sendGetRequest(adminFrontHtml, responseHandler);
+        admin.loadFrontPage();
       }
     });
   }

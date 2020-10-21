@@ -66,57 +66,7 @@
       </div>
       <% }) %>
 
-      <!-- Modal -->
 
-      <div class="modal fade" id="bookAppointmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Book an Appointment</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form action="index.html" method="post">
-                <div class="form-group">
-                  <label class="parameter">Details of Complaint</label>
-                  <textarea type="text" name="complaint" class="form-control caseInfo" id="complaint"
-                    required></textarea>
-                </div>
-                <div class="form-group">
-                  <label class="parameter">Email ID</label>
-                  <input type="text" name="email" id="email" class="form-control emailId" required>
-                </div>
-                <div class="form-group">
-                  <label class="parameter">Mobile Number</label>
-                  <input type="text" name="mobileNo" id="mobileNo" class="form-control phoneNo" required>
-                </div>
-                <div class="form-group">
-                  <label class="parameter">Type</label>
-                  <br>
-                  <input type="radio" id="appelant" name="type" value="appelant">
-                  <label for="male">Appelant</label><br>
-                  <input type="radio" id="defendant" name="type" value="defendant">
-                  <label for="female">Defendant</label><br>
-                </div>
-                <div class="form-group">
-                  <label class="parameter">Have you approached any lawyer previously?</label>
-                  <br>
-                  <input type="radio" id="yes" name="approached" value="yes">
-                  <label for="male">Yes</label><br>
-                  <input type="radio" id="no" name="approached" value="no">
-                  <label for="female">No</label><br>
-                </div>
-
-                <center><button type="submit" onclick="$ec.contactLawyer();" name="submit"
-                    class="btn btn-primary">Submit</button></center>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
 
 
       <!-- Paging -->
@@ -174,5 +124,56 @@
     </div>
 
 
+  </div>
+</div>
+
+<!-- Modal -->
+
+<div class="modal fade" id="bookAppointmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Book an Appointment</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="index.html" method="post">
+          <div class="form-group">
+            <label class="parameter">Details of Complaint</label>
+            <textarea type="text" name="complaint" class="form-control caseInfo" id="complaint" required></textarea>
+          </div>
+          <div class="form-group">
+            <label class="parameter">Email ID</label>
+            <input type="text" name="email" id="email" class="form-control emailId" required>
+          </div>
+          <div class="form-group">
+            <label class="parameter">Mobile Number</label>
+            <input type="tel" name="mobileNo" id="mobileNo" class="form-control phoneNo" required>
+          </div>
+          <div class="form-group">
+            <label class="parameter">Type</label>
+            <br>
+            <input type="radio" id="appelant" name="type" value="appelant">
+            <label for="male">Appelant</label><br>
+            <input type="radio" id="defendant" name="type" value="defendant">
+            <label for="female">Defendant</label><br>
+          </div>
+          <div class="form-group">
+            <label class="parameter">Have you approached any lawyer previously?</label>
+            <br>
+            <input type="radio" id="yes" name="approached" value="yes">
+            <label for="male">Yes</label><br>
+            <input type="radio" id="no" name="approached" value="no">
+            <label for="female">No</label><br>
+          </div>
+
+          <center><button type="submit" data-dismiss="modal" onclick="$ec.contactLawyer();" name="submit"
+              class="btn btn-primary">Submit</button></center>
+        </form>
+      </div>
+    </div>
   </div>
 </div>

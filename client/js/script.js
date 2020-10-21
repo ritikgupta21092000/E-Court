@@ -13,6 +13,7 @@
   var adminPanelUrl = "http://localhost:3000/client/adminPanel.html";
   var serverUrl = "http://localhost:5000/";
 
+  ec.lawyerId = "";
   ec.username = "";
 
   function insertHtml(selector, html) {
@@ -55,15 +56,20 @@
 
   ec.loadAdvocatePage = function () {
     showLoadingSpinner();
-    setTimeout(() => {
-      $.ajax({
-        type: "GET",
-        url: serverUrl + "lawyers",
-        success: function (data) {
-          responseHandler(data);
-        },
-      });
-    }, 1000);
+    if (ec.username) {
+      setTimeout(() => {
+        $.ajax({
+          type: "GET",
+          url: serverUrl + "lawyers",
+          success: function (data) {
+            responseHandler(data);
+          },
+        });
+      }, 1000);
+    } else {
+      Swal.fire("Please Login First");
+      ec.loadHomePage();
+    }
   };
 
   ec.loadUserDashboard = function () {
@@ -220,34 +226,6 @@
       .catch((error) => {
         console.log(error);
       });
-
-    // $.ajax({
-    //   type: "POST",
-    //   data: JSON.stringify(data),
-    //   contentType: "application/json",
-    //   url: serverUrl + "login",
-    //   success: function (data) {
-    //     if (data.user == null) {
-    //       Swal.fire({
-    //         icon: "error",
-    //         title: "Oops...",
-    //         text: "Something went wrong!",
-    //         footer: "<a href>Why do I have this issue?</a>",
-    //       });
-    //     } else if (data.user.admin === true) {
-    //       location.replace(adminPanelUrl);
-    //     } else if (data.user.admin === false) {
-    //       ec.username = data.user.username;
-    //       Swal.fire(
-    //         "LoggedIn Successfully!",
-    //         "You clicked the button!",
-    //         "success"
-    //       );
-    //       $(".manipulated-text a.nav-link").text(data.user.username);
-    //       $(".manipulated-text").removeClass("manipulated-text");
-    //     }
-    //   },
-    // });
   }
 
   $("#login").click(function (e) {
@@ -390,6 +368,40 @@
       })
       .catch(error => {
         console.error(error);
+      });
+  }
+
+  ec.toggleModal = function (lawyerFormId) {
+    ec.lawyerId = lawyerFormId;
+  }
+
+  ec.contactLawyer = function () {
+    var data = {
+      username: ec.username,
+      caseInfo: document.getElementsByClassName("caseInfo")[0].value,
+      typeOfUser: document.querySelector("input[name='type']:checked").value,
+      phoneNo: parseInt(document.getElementsByClassName("phoneNo")[0].value),
+      emailId: document.getElementsByClassName("emailId")[0].value,
+      lawyerId: ec.lawyerId
+    };
+    fetch(serverUrl + "userAppointment", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(data => {
+        Swal.fire(
+          "Booked Appointment Successfully",
+          "Please Wait for Approval",
+          "success"
+        );
+        ec.loadHomePage();
+      })
+      .catch(error => {
+        console.log(error);
       });
   }
 

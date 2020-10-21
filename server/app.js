@@ -21,6 +21,7 @@ const Lawyers = require("./models/lawyers");
 const Appelant = require("./models/appelant");
 const Defendant = require("./models/defendant");
 const Case = require("./models/case");
+const UserAppointment = require("./models/registerCase");
 
 var lawyerUsername = "";
 var appelantId = "";
@@ -174,7 +175,7 @@ app.get("/getClosedCases", function (req, res) {
 });
 
 app.get("/noOfLawyers", function (req, res) {
-  Lawyers.find({}, function (err, foundLawyer) {
+  Lawyers.find({ status: true }, function (err, foundLawyer) {
     if (err) {
       console.log(err);
     } else {
@@ -448,6 +449,31 @@ app.post("/registerCase", function (req, res) {
       console.log(err);
     } else {
       res.send({ insertedData });
+    }
+  });
+});
+
+app.post("/userAppointment", function (req, res) {
+  var lawyerId = new ObjectId(req.body.lawyerId);
+  var data = {
+    caseInfo: req.body.caseInfo,
+    typeOfUser: req.body.typeOfUser,
+    phoneNo: req.body.phoneNo,
+    emailId: req.body.emailId,
+    lawyerId: lawyerId
+  };
+  User.findOne({ username: req.body.username }, function (error, foundUser) {
+    if (error) {
+      console.log(error);
+    } else {
+      data.userId = foundUser._id;
+      UserAppointment.create(data, function (error, createData) {
+        if (error) {
+          console.log(error);
+        } else {
+          res.json({ posted: "successfully" });
+        }
+      });
     }
   });
 });

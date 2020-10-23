@@ -9,12 +9,15 @@
   var addLawyerProfessionalForm = "snippets/addLawyer-Professional.html";
   var userDashboardFrontHtml = "snippets/user-dashboard-front.html";
   var privacyPolicyHtml = "snippets/privacyPolicy-snippet.html";
+  var lawyerDashboardHtml = "snippets/lawyerDashboard-snippet.html";
+  var lawyerDashboardFrontHtml = "snippets/lawyerDashboard-front-snippet.html";
 
   var adminPanelUrl = "http://localhost:3000/client/adminPanel.html";
   var serverUrl = "http://localhost:5000/";
 
   ec.lawyerId = "";
   ec.username = "";
+  ec.lawyerUsername = "";
 
   function insertHtml(selector, html) {
     document.querySelector(selector).innerHTML = html;
@@ -56,7 +59,7 @@
 
   ec.loadAdvocatePage = function () {
     showLoadingSpinner();
-    if (ec.username) {
+    if (ec.username || ec.lawyerUsername) {
       setTimeout(() => {
         $.ajax({
           type: "GET",
@@ -97,6 +100,12 @@
         .catch(error => {
           console.log(error);
         });
+    } else if(ec.lawyerUsername) {
+      showLoadingSpinner();
+      $ajaxUtils.sendGetRequest(lawyerDashboardHtml, responseHandler);
+      setTimeout(() => {
+        $ajaxUtils.sendGetRequest(lawyerDashboardFrontHtml, lawyerDashboardHandler);
+      }, 300);
     } else {
       Swal.fire("Please Login First");
       $ajaxUtils.sendGetRequest(homeHtml, responseHandler);
@@ -146,6 +155,10 @@
     insertHtml("#user-dashboard-content", responseText);
   }
 
+  function lawyerDashboardHandler(responseText) {
+    insertHtml("#lawyer-content", responseText);
+  }
+
   ec.allLaws = function () {
     showLoadingSpinner();
     $.ajax({
@@ -160,30 +173,39 @@
   ec.register = function (e) {
     e.preventDefault();
 
-    var data = {};
-    data.username = $("#email").val();
-    data.password = $("#pwd").val();
-    $.ajax({
-      type: "POST",
-      data: JSON.stringify(data),
-      contentType: "application/json",
-      url: serverUrl + "signup",
-      success: function (data) {
-        if (data.success) {
-          Swal.fire(
-            "Registered Successfully!",
-            "You clicked the button!",
-            "success"
-          );
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong!",
-            footer: "<a href>Why do I have this issue?</a>",
-          });
-        }
+    var data = {
+      username: $("#email").val(),
+      phoneNo: $("#phoneNo").val(),
+      city: $("#city").val(),
+      password: $("#pwd").val()
+    };
+
+    fetch(serverUrl + "signup", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json"
       },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        Swal.fire(
+          "Registered Successfully!",
+          "You clicked the button!",
+          "success"
+        );
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          footer: "<a href>Why do I have this issue?</a>",
+        });
+      }
+    })
+    .catch(error => {
+      console.log(error);
     });
   }
 
@@ -404,6 +426,50 @@
       .catch(error => {
         console.log(error);
       });
+  }
+
+  ec.lawyerLogin = function () {
+    var data = {
+      lawyerUsername: $("#lawyerUsername").val(),
+      lawyerPassword: $("#lawyerPassword").val()
+    };
+    showLoadingSpinner();
+    fetch(serverUrl + "lawyerLogin", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.foundLawyer) {
+        ec.lawyerUsername = data.foundLawyer.username;
+       ec.loadUserDashboard();
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          footer: "<a href>Why do I have this issue?</a>",
+        });
+        ec.authentication();
+      }
+    })
+    .catch(error => console.log(error));
+  }
+
+  ec.lawyerCaseRequests = function () {
+    fetch(serverUrl + "lawyerCaseRequests", {
+      method: "get"
+    })
+    .then(res => res.text())
+    .then(data => {
+      insertHtml("#lawyer-content", data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
   }
 
   function responseHandler(responseText) {

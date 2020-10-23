@@ -11,6 +11,12 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String
   },
+  phoneNo: {
+    type: Number
+  },
+  city: {
+    type: String
+  },
   admin: {
     type: Boolean,
     default: false,

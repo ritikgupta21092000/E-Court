@@ -13,7 +13,7 @@
                 additional content. This content is a little bit longer.</p>
               <button type="submit" class="btn btn-primary btn-md"
                 onclick="$ec.addLawyerPersonalDetails();">Register</button>
-              <button type="submit" class="btn btn-success btn-md">Login</button>
+              <button type="submit" data-toggle="modal" data-target="#lawyerLoginModal" class="btn btn-success btn-md">Login</button>
             </div>
           </div>
         </div>
@@ -104,6 +104,64 @@
   </div>
 </div>
 
+<div class="modal fade container-fluid" id="lawyerLoginModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="login-text">
+          <h4 class="modal-title"><i class="fas fa-user mr-2"></i><i>SignIn</i></h4>
+        </div>
+
+        <button type="button" class="close" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="card mb-3" style="width: 100%;">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img src="./images/login.png" class="card-img" alt="login">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <!-- <h5 class="card-title">Login</h5> -->
+                <form class="" action="index.html" method="post">
+                  <div class="form-group row">
+                    <div class="col-md-2 mt-1">
+                      <label for="username">Email:</label>
+                    </div>
+                    <div class="col-md-9">
+                      <input type="email" class="form-control ml-2" name="username" id="lawyerUsername" value="">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-2 mt-1">
+                      <label for="password">Password:</label>
+                    </div>
+                    <div class="col-md-9">
+                      <input type="password" class="form-control ml-2" name="password" id="lawyerPassword" value="">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="offset-md-4 p-0">
+                      <button type="button" name="button" data-dismiss="modal"
+                        class="btn btn-sm btn-dark">Cancel</button>
+                    </div>
+                    <div class="p-0 ml-2">
+                      <button type="button" data-dismiss="modal" onclick="$ec.lawyerLogin();" name="button"
+                        class="btn btn-sm btn-primary">Login</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade container-fluid p-0" id="registerModal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -118,15 +176,29 @@
       <div class="modal-body">
         <div class="card" style="width: 100%;">
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
               <img src="./images/registration.png" alt="registration" width="100%" height="100%">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-6">
               <form id="registerForm" action="index.html" method="POST">
                 <div class="form-group row">
                   <label for="email" class="col-md-12 mt-1">Email:</label>
                   <div class="col-md-9">
                     <input type="email" name="email" id="email" class="form-control">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="phoneNo" class="col-md-12 mt-1">Phone No:</label>
+                  <div class="col-md-9">
+                    <input type="tel" name="phoneNo" id="phoneNo" class="form-control">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="city" class="col-md-12 mt-1">City:</label>
+                  <div class="col-md-9">
+                    <input type="text" name="city" id="city" class="form-control">
                   </div>
                 </div>
 

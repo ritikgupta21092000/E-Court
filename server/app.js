@@ -242,12 +242,26 @@ app.get("/solvedCases", function (req, res) {
     });
 });
 
+app.get("/lawyerCaseRequests", (req, res) => {
+  console.log("Inside");
+  console.log(sess);
+  UserAppointment.find({lawyerId: sess.lawyerId})
+  .populate("userId")
+  .then(foundAppointment => {
+    res.render("lawyerViewAppointment", {foundAppointment});
+  })
+  .catch(error => {
+    console.log(error);
+  });
+});
+
 app.post("/signup", function (req, res) {
-  const newUser = {
+  const newUser = new User({
     username: req.body.username,
-    password: req.body.password,
-  };
-  User.register({ username: req.body.username }, req.body.password, function (err, user) {
+    phoneNo: req.body.phoneNo,
+    city: req.body.city
+  });
+  User.register(newUser, req.body.password, function (err, user) {
     if (err) {
       console.log(err);
     } else {
@@ -474,6 +488,27 @@ app.post("/userAppointment", function (req, res) {
           res.send({ posted: "successfully" });
         }
       });
+    }
+  });
+});
+
+app.post("/lawyerLogin", (req, res) => {
+  var data = {
+    username: req.body.lawyerUsername,
+    password: req.body.lawyerPassword
+  };
+  sess = req.session;
+  Lawyers.findOne(data, (error, foundLawyer) => {
+    if (error) {
+      console.log(error);
+    } else {
+      if (foundLawyer) {
+        sess.lawyerId = foundLawyer._id;
+        res.send({foundLawyer});
+      } else {
+        res.send({foundLawyer});
+      }
+      
     }
   });
 });

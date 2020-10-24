@@ -260,6 +260,19 @@
     });
   }
 
+  admin.lawyerApprovedCases = function () {
+    fetch(serverUrl + "lawyerApprovedCases", {
+      method: "get"
+    })
+    .then(res => res.text())
+    .then(data => {
+      insertHtml("#admin-content", data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
   function responseHandler(responseText) {
     insertHtml("#admin-content", responseText);
   }

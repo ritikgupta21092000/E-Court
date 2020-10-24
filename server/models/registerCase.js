@@ -27,6 +27,10 @@ const userAppointmentSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  revisedFees: {
+    type: Number,
+    default: 0
+  },
   isAdminApproved: {
     type: Boolean,
     default: false

@@ -1,0 +1,28 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>FullName</th>
+      <th>Complaint</th>
+      <th>Type</th>
+      <th>Lawyer FullName</th>
+      <th>Lawyer EmailId</th>
+      <th>Fees per hearing</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% foundAllApprovedCases.forEach(element => { %>
+      <tr>
+        <td><%= element.userId.fullName %> </td>
+        <td><%= element.caseInfo %> </td>
+        <td><%= element.typeOfUser %> </td>
+        <td><%= element.lawyerId.fullname %> </td>
+        <td><%= element.lawyerId.username %> </td>
+        <% if (userType) {%>
+          <td><%= element.fees %> </td>
+        <% } else { %>  
+          <td><%= element.revisedFees %> </td>
+        <% } %> 
+      </tr>
+    <% }); %> 
+  </tbody>
+</table>

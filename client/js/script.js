@@ -174,6 +174,9 @@
     e.preventDefault();
 
     var data = {
+      fullName: $("#fullName").val(),
+      dob: $("#dob").val(),
+      gender: $("input[name='gender']:checked").val(),
       username: $("#email").val(),
       phoneNo: $("#phoneNo").val(),
       city: $("#city").val(),
@@ -466,6 +469,161 @@
     .then(res => res.text())
     .then(data => {
       insertHtml("#lawyer-content", data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
+  ec.approveAction = function (id) {
+    var fees = prompt("Enter Fess per hearing:");
+    var data = {
+      fees: fees,
+      id: id
+    }
+    fetch(serverUrl + "lawyerApprovedUserCases", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.updatedData) {
+        Swal.fire(
+          "Approved Successfully",
+          "Click Below Button",
+          "success"
+        );
+        ec.lawyerCaseRequests();
+      } else {
+        console.log(data);
+      }
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
+  ec.rejectAction = function (id) {
+    var message = prompt("Reason for Rejection of Appointment");
+    var data = {
+      id: id,
+      message: message
+    };
+    fetch(serverUrl + "lawyerRejectUserCases", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.removedUserAppointment) {
+        ec.lawyerCaseRequests();
+      } else {
+        console.log(data);
+      }
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
+  ec.approvedBylawyer = function () {
+    fetch(serverUrl + "approvedByLawyer", {
+      method: "get"
+    })
+    .then(res => res.text())
+    .then(data => {
+      dashboardHandler(data)
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
+  ec.userApprovedCase = function (id) {
+    var data = {
+      id: id
+    };
+    console.log(data);
+    fetch(serverUrl + "userApprovedCase", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data) {
+        Swal.fire(
+          "Approved Successfully",
+          "Click the below button",
+          "success"
+        );
+        ec.approvedBylawyer();
+      } else {
+        console.log(data);
+      }
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
+  ec.userRejectCase = function (id) {
+    var data = {
+      id: id
+    };
+    fetch(serverUrl + "userRejectCase", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.removedDocument) {
+        Swal.fire(
+          "Rejected Successfully",
+          "Click the below button",
+          "success"
+        );
+        ec.approvedBylawyer();
+      } else {
+        
+      }
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
+  ec.allApprovedCasesByLawyerAndUser = function () {
+    fetch(serverUrl + "allApprovedCasesByLawyerAndUser", {
+      method: "get"
+    })
+    .then(res => res.text())
+    .then(data => {
+      dashboardHandler(data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
+  ec.caseApprovedByUsers = function () {
+    fetch(serverUrl + "caseApprovedByUsers", {
+      method: "get"
+    })
+    .then(res => res.text())
+    .then(data => {
+      lawyerDashboardHandler(data)
     })
     .catch(error => {
       console.log(error);

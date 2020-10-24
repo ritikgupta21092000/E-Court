@@ -19,9 +19,9 @@
         <td><%= element.userId.city %> </td>
         <td>
           <div class="btn-group mr-2" role="group" aria-label="First group">
-         <button type="button" class="btn btn-success" onclick="approveAction();">Approve</button>
-        <button type="button" class="btn btn-danger">Reject</button>
-        </div>
+          <button type="button" class="btn btn-success" onclick="$ec.approveAction('<%= element._id %>');">Approve</button>
+          <button type="button" class="btn btn-danger" onclick="$ec.rejectAction('<%= element._id %>');">Reject</button>
+          </div>
         </td>
       </tr>
     <% }); %> 

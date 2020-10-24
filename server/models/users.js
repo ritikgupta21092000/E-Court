@@ -4,6 +4,15 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 
 const userSchema = new mongoose.Schema({
+  fullName: {
+    type: String
+  },
+  dob: {
+    type: String
+  },
+  gender: {
+    type: String
+  },
   username: {
     type: String,
     required: true,

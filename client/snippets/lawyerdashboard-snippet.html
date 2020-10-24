@@ -7,11 +7,10 @@
     <div class="sidebar">
       <div class="sidebar-header pl-5 pb-2 pt-2 mb-5">
         <p><i class="fas fa-tachometer-alt fa-lg"></i> Dashboard</p>
-
       </div>
       <div class="sidebar-item offset-2">
         <div class="sidebar-item-link mb-4">
-          <a href="#"><i class="fas fa-home"></i> Home</a><br>
+          <a href="#" onclick="$ec.loadHomePage();"><i class="fas fa-home"></i> Home</a><br>
         </div>
         <div class="sidebar-item-link mb-4">
           <a href="#"><i class="fas fa-user-edit"></i> Update Profile</a><br>
@@ -23,7 +22,7 @@
           <a href="#" onclick="$ec.lawyerCaseRequests();"><i class="fas fa-users"></i> Case Requests</a><br>
         </div>
         <div class="sidebar-item-link">
-          <a href="#"><i class="fas fa-check"></i> Approved Users Case</a><br>
+          <a href="#" onclick="$ec.caseApprovedByUsers();"><i class="fas fa-check"></i> Approved Clients Case</a><br>
         </div>
       </div>
     </div>

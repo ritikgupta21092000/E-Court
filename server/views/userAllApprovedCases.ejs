@@ -7,22 +7,25 @@
       <th>Lawyer FullName</th>
       <th>Lawyer EmailId</th>
       <th>Fees per hearing</th>
+      <th>Contact Lawyer</th>
     </tr>
   </thead>
   <tbody>
     <% foundAllApprovedCases.forEach(element => { %>
-      <tr>
-        <td><%= element.userId.fullName %> </td>
-        <td><%= element.caseInfo %> </td>
-        <td><%= element.typeOfUser %> </td>
-        <td><%= element.lawyerId.fullname %> </td>
-        <td><%= element.lawyerId.username %> </td>
-        <% if (userType) {%>
-          <td><%= element.fees %> </td>
-        <% } else { %>  
-          <td><%= element.revisedFees %> </td>
-        <% } %> 
-      </tr>
-    <% }); %> 
+    <tr>
+      <td><%= element.userId.fullName %> </td>
+      <td><%= element.caseInfo %> </td>
+      <td><%= element.typeOfUser %> </td>
+      <td><%= element.lawyerId.fullname %> </td>
+      <td><%= element.lawyerId.username %> </td>
+      <% if (userType) {%>
+      <td><%= element.fees %> </td>
+      <% } else { %>
+      <td><%= element.revisedFees %> </td>
+      <td><a href="mailto:<%= element.lawyerId.username %>" role="button" class="btn btn-outline-primary btn-md">Contact
+          Lawyer</a></td>
+      <% } %>
+    </tr>
+    <% }); %>
   </tbody>
 </table>

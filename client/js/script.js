@@ -398,6 +398,17 @@
 
   ec.toggleModal = function (lawyerFormId) {
     ec.lawyerId = lawyerFormId;
+    fetch(serverUrl + "getUserDetails", {
+      method: "get"
+    })
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("email").value = data.foundUser.username;
+      document.getElementById("email").disabled = true;
+      document.getElementById("mobileNo").value = data.foundUser.phoneNo;
+      document.getElementById("mobileNo").disabled = true;
+    })
+    .catch(error => console.log(error));
   }
 
   ec.contactLawyer = function () {

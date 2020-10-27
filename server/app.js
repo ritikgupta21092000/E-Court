@@ -301,6 +301,16 @@ app.get("/caseApprovedByUsers", (req, res) => {
   });
 });
 
+app.get("/getUserDetails", (req, res) => {
+  User.findById(sess.passport.user, (err, foundUser) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send({foundUser});
+    }
+  })
+});
+
 app.post("/signup", function (req, res) {
   const newUser = new User({
     fullName: req.body.fullName,

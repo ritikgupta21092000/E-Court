@@ -646,7 +646,6 @@ app.post("/applyFilter", (req, res) => {
         if (error) {
           console.log(error);
         } else {
-          console.log(foundFilteredLawyers);
           res.render("lawyer", { foundLawyers: foundLawyers, foundFilteredLawyers: foundFilteredLawyers, city, speciality });
         }
       });

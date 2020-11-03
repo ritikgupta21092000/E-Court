@@ -41,7 +41,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors());
 
-mongoose.connect("mongodb://localhost:27017/ecourtDB", {
+mongoose.connect("mongodb+srv://admin-ritik:Ritik@21@cluster0-ase9w.mongodb.net/ecourtDB", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -71,7 +71,7 @@ app.get("/lawyers", function (req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.render("lawyer", { foundLawyers: foundLawyers });
+      res.render("lawyer", { foundLawyers: foundLawyers, foundFilteredLawyers: "", city: "", speciality: "" });
     }
   });
 });
@@ -243,62 +243,62 @@ app.get("/solvedCases", function (req, res) {
 });
 
 app.get("/lawyerCaseRequests", (req, res) => {
-  UserAppointment.find({lawyerId: sess.lawyerId, isLawyerApproved: false})
-  .populate("userId")
-  .then(foundAppointment => {
-    res.render("lawyerViewAppointment", {foundAppointment});
-  })
-  .catch(error => {
-    console.log(error);
-  });
+  UserAppointment.find({ lawyerId: sess.lawyerId, isLawyerApproved: false })
+    .populate("userId")
+    .then(foundAppointment => {
+      res.render("lawyerViewAppointment", { foundAppointment });
+    })
+    .catch(error => {
+      console.log(error);
+    });
 });
 
 app.get("/lawyerApprovedCases", (req, res) => {
-  UserAppointment.find({isLawyerApproved: true})
-  .populate("lawyerId")
-  .populate("userId")
-  .then(foundLawyerApprovedCases => {
-    res.render("adminLawyerApprovedCases", {foundLawyerApprovedCases: foundLawyerApprovedCases});
-  })
-  .catch(error => {
-    console.log(error);
-  });
+  UserAppointment.find({ isLawyerApproved: true })
+    .populate("lawyerId")
+    .populate("userId")
+    .then(foundLawyerApprovedCases => {
+      res.render("adminLawyerApprovedCases", { foundLawyerApprovedCases: foundLawyerApprovedCases });
+    })
+    .catch(error => {
+      console.log(error);
+    });
 });
 
 app.get("/approvedByLawyer", (req, res) => {
-  UserAppointment.find({userId: sess.passport.user, isLawyerApproved: true, isUserApproved: false})
-  .populate("lawyerId")
-  .populate("userId")
-  .then(foundCases => {
-    res.render("userLawyerApprovedCases", {foundCases: foundCases});
-  })
-  .catch(error => {
-    console.log(error);
-  });
+  UserAppointment.find({ userId: sess.passport.user, isLawyerApproved: true, isUserApproved: false })
+    .populate("lawyerId")
+    .populate("userId")
+    .then(foundCases => {
+      res.render("userLawyerApprovedCases", { foundCases: foundCases });
+    })
+    .catch(error => {
+      console.log(error);
+    });
 });
 
 app.get("/allApprovedCasesByLawyerAndUser", (req, res) => {
-  UserAppointment.find({userId: sess.passport.user, isUserApproved: true, isLawyerApproved: true})
-  .populate("lawyerId")
-  .populate("userId")
-  .then(foundAllApprovedCases => {
-    res.render("userAllApprovedCases", {foundAllApprovedCases, userType: ""});
-  })
-  .catch(error => {
-    console.log(error);
-  });
+  UserAppointment.find({ userId: sess.passport.user, isUserApproved: true, isLawyerApproved: true })
+    .populate("lawyerId")
+    .populate("userId")
+    .then(foundAllApprovedCases => {
+      res.render("userAllApprovedCases", { foundAllApprovedCases, userType: "" });
+    })
+    .catch(error => {
+      console.log(error);
+    });
 });
 
 app.get("/caseApprovedByUsers", (req, res) => {
-  UserAppointment.find({lawyerId: sess.lawyerId, isLawyerApproved: true, isUserApproved: true})
-  .populate("lawyerId")
-  .populate("userId")
-  .then(foundAllApprovedCases => {
-    res.render("userAllApprovedCases", {foundAllApprovedCases, userType: "lawyer"});
-  })
-  .catch(error => {
-    console.log(error);
-  });
+  UserAppointment.find({ lawyerId: sess.lawyerId, isLawyerApproved: true, isUserApproved: true })
+    .populate("lawyerId")
+    .populate("userId")
+    .then(foundAllApprovedCases => {
+      res.render("userAllApprovedCases", { foundAllApprovedCases, userType: "lawyer" });
+    })
+    .catch(error => {
+      console.log(error);
+    });
 });
 
 app.get("/getUserDetails", (req, res) => {
@@ -306,7 +306,7 @@ app.get("/getUserDetails", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.send({foundUser});
+      res.send({ foundUser });
     }
   })
 });
@@ -563,11 +563,11 @@ app.post("/lawyerLogin", (req, res) => {
     } else {
       if (foundLawyer) {
         sess.lawyerId = foundLawyer._id;
-        res.send({foundLawyer});
+        res.send({ foundLawyer });
       } else {
-        res.send({foundLawyer});
+        res.send({ foundLawyer });
       }
-      
+
     }
   });
 });
@@ -576,11 +576,11 @@ app.post("/lawyerApprovedUserCases", (req, res) => {
   var fees = parseInt(req.body.fees);
   var id = ObjectId(req.body.id);
   var revisedFees = fees + (fees * 0.1);
-  UserAppointment.updateOne({_id: id}, {$set: {fees: fees, revisedFees: revisedFees, isLawyerApproved: true}}, function (error, updatedDocument) {
+  UserAppointment.updateOne({ _id: id }, { $set: { fees: fees, revisedFees: revisedFees, isLawyerApproved: true } }, function (error, updatedDocument) {
     if (error) {
       console.log(error);
     } else {
-      res.send({updatedData: "success"});
+      res.send({ updatedData: "success" });
     }
   });
 });
@@ -589,37 +589,37 @@ app.post("/lawyerRejectUserCases", (req, res) => {
   var id = ObjectId(req.body.id);
   var message = req.body.message;
   UserAppointment.findByIdAndRemove(id)
-  .populate("lawyerId")
-  .populate("userId")
-  .then(removedUserAppointment => {
-    var mailOptions = {
-      from: process.env.EMAIL_ID,
-      to: removedUserAppointment.userId.username,
-      subject: "Rejection of Appointment by Lawyer",
-      html: "Dear " + removedUserAppointment.userId.fullName + " your appointment is rejected by lawyer " + removedUserAppointment.lawyerId.fullname
-      + "<br>" + "Reason for rejection is:<br>" + message 
-    };
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log(info.response);
-      }
+    .populate("lawyerId")
+    .populate("userId")
+    .then(removedUserAppointment => {
+      var mailOptions = {
+        from: process.env.EMAIL_ID,
+        to: removedUserAppointment.userId.username,
+        subject: "Rejection of Appointment by Lawyer",
+        html: "Dear " + removedUserAppointment.userId.fullName + " your appointment is rejected by lawyer " + removedUserAppointment.lawyerId.fullname
+          + "<br>" + "Reason for rejection is:<br>" + message
+      };
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log(info.response);
+        }
+      });
+      res.json({ removedUserAppointment: true });
+    })
+    .catch(error => {
+      console.log(error);
     });
-    res.json({removedUserAppointment: true});
-  })
-  .catch(error => {
-    console.log(error);
-  });
 });
 
 app.post("/userApprovedCase", (req, res) => {
   var id = ObjectId(req.body.id);
-  UserAppointment.updateOne({_id: id}, {$set: {isUserApproved: true}}, function (error, updatedDocument) {
+  UserAppointment.updateOne({ _id: id }, { $set: { isUserApproved: true } }, function (error, updatedDocument) {
     if (error) {
       console.log(error);
     } else {
-      res.json({caseApproved: true});
+      res.json({ caseApproved: true });
     }
   });
 });
@@ -630,7 +630,26 @@ app.post("/userRejectCase", (req, res) => {
     if (error) {
       console.log(error);
     } else {
-      res.json({removedDocument});
+      res.json({ removedDocument });
+    }
+  });
+});
+
+app.post("/applyFilter", (req, res) => {
+  var city = req.body.city;
+  var speciality = req.body.speciality;
+  Lawyers.find({}, (err, foundLawyers) => {
+    if (err) {
+      console.log(err);
+    } else {
+      Lawyers.find({ city: city, speciality: speciality }, (error, foundFilteredLawyers) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log(foundFilteredLawyers);
+          res.render("lawyer", { foundLawyers: foundLawyers, foundFilteredLawyers: foundFilteredLawyers, city, speciality });
+        }
+      });
     }
   });
 });

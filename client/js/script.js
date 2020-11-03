@@ -100,7 +100,7 @@
         .catch(error => {
           console.log(error);
         });
-    } else if(ec.lawyerUsername) {
+    } else if (ec.lawyerUsername) {
       showLoadingSpinner();
       $ajaxUtils.sendGetRequest(lawyerDashboardHtml, responseHandler);
       setTimeout(() => {
@@ -190,26 +190,26 @@
       },
       body: JSON.stringify(data)
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        Swal.fire(
-          "Registered Successfully!",
-          "You clicked the button!",
-          "success"
-        );
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
-          footer: "<a href>Why do I have this issue?</a>",
-        });
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    });
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          Swal.fire(
+            "Registered Successfully!",
+            "You clicked the button!",
+            "success"
+          );
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: "<a href>Why do I have this issue?</a>",
+          });
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   ec.login = function (e) {
@@ -401,14 +401,14 @@
     fetch(serverUrl + "getUserDetails", {
       method: "get"
     })
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById("email").value = data.foundUser.username;
-      document.getElementById("email").disabled = true;
-      document.getElementById("mobileNo").value = data.foundUser.phoneNo;
-      document.getElementById("mobileNo").disabled = true;
-    })
-    .catch(error => console.log(error));
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("email").value = data.foundUser.username;
+        document.getElementById("email").disabled = true;
+        document.getElementById("mobileNo").value = data.foundUser.phoneNo;
+        document.getElementById("mobileNo").disabled = true;
+      })
+      .catch(error => console.log(error));
   }
 
   ec.contactLawyer = function () {
@@ -455,35 +455,35 @@
       },
       body: JSON.stringify(data)
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.foundLawyer) {
-        ec.lawyerUsername = data.foundLawyer.username;
-       ec.loadUserDashboard();
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
-          footer: "<a href>Why do I have this issue?</a>",
-        });
-        ec.authentication();
-      }
-    })
-    .catch(error => console.log(error));
+      .then(res => res.json())
+      .then(data => {
+        if (data.foundLawyer) {
+          ec.lawyerUsername = data.foundLawyer.username;
+          ec.loadUserDashboard();
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: "<a href>Why do I have this issue?</a>",
+          });
+          ec.authentication();
+        }
+      })
+      .catch(error => console.log(error));
   }
 
   ec.lawyerCaseRequests = function () {
     fetch(serverUrl + "lawyerCaseRequests", {
       method: "get"
     })
-    .then(res => res.text())
-    .then(data => {
-      insertHtml("#lawyer-content", data);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+      .then(res => res.text())
+      .then(data => {
+        insertHtml("#lawyer-content", data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   ec.approveAction = function (id) {
@@ -499,22 +499,22 @@
       },
       body: JSON.stringify(data)
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.updatedData) {
-        Swal.fire(
-          "Approved Successfully",
-          "Click Below Button",
-          "success"
-        );
-        ec.lawyerCaseRequests();
-      } else {
-        console.log(data);
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    });
+      .then(res => res.json())
+      .then(data => {
+        if (data.updatedData) {
+          Swal.fire(
+            "Approved Successfully",
+            "Click Below Button",
+            "success"
+          );
+          ec.lawyerCaseRequests();
+        } else {
+          console.log(data);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   ec.rejectAction = function (id) {
@@ -530,30 +530,30 @@
       },
       body: JSON.stringify(data)
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.removedUserAppointment) {
-        ec.lawyerCaseRequests();
-      } else {
-        console.log(data);
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    });
+      .then(res => res.json())
+      .then(data => {
+        if (data.removedUserAppointment) {
+          ec.lawyerCaseRequests();
+        } else {
+          console.log(data);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   ec.approvedBylawyer = function () {
     fetch(serverUrl + "approvedByLawyer", {
       method: "get"
     })
-    .then(res => res.text())
-    .then(data => {
-      dashboardHandler(data)
-    })
-    .catch(error => {
-      console.log(error);
-    });
+      .then(res => res.text())
+      .then(data => {
+        dashboardHandler(data)
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   ec.userApprovedCase = function (id) {
@@ -568,22 +568,22 @@
       },
       body: JSON.stringify(data)
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data) {
-        Swal.fire(
-          "Approved Successfully",
-          "Click the below button",
-          "success"
-        );
-        ec.approvedBylawyer();
-      } else {
-        console.log(data);
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    });
+      .then(res => res.json())
+      .then(data => {
+        if (data) {
+          Swal.fire(
+            "Approved Successfully",
+            "Click the below button",
+            "success"
+          );
+          ec.approvedBylawyer();
+        } else {
+          console.log(data);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   ec.userRejectCase = function (id) {
@@ -597,48 +597,70 @@
       },
       body: JSON.stringify(data)
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.removedDocument) {
-        Swal.fire(
-          "Rejected Successfully",
-          "Click the below button",
-          "success"
-        );
-        ec.approvedBylawyer();
-      } else {
-        
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    });
+      .then(res => res.json())
+      .then(data => {
+        if (data.removedDocument) {
+          Swal.fire(
+            "Rejected Successfully",
+            "Click the below button",
+            "success"
+          );
+          ec.approvedBylawyer();
+        } else {
+
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   ec.allApprovedCasesByLawyerAndUser = function () {
     fetch(serverUrl + "allApprovedCasesByLawyerAndUser", {
       method: "get"
     })
-    .then(res => res.text())
-    .then(data => {
-      dashboardHandler(data);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+      .then(res => res.text())
+      .then(data => {
+        dashboardHandler(data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   ec.caseApprovedByUsers = function () {
     fetch(serverUrl + "caseApprovedByUsers", {
       method: "get"
     })
-    .then(res => res.text())
-    .then(data => {
-      lawyerDashboardHandler(data)
+      .then(res => res.text())
+      .then(data => {
+        lawyerDashboardHandler(data)
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  ec.applyFilter = function () {
+    var data = {
+      city: document.getElementById("citydropdown").value,
+      speciality: document.getElementById("expdropdown").value
+    };
+    showLoadingSpinner();
+    fetch(serverUrl + "applyFilter", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
     })
-    .catch(error => {
-      console.log(error);
-    });
+      .then(res => res.text())
+      .then(data => {
+        insertHtml("#main-content", data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   function responseHandler(responseText) {

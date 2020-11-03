@@ -2,6 +2,8 @@
   <link rel="stylesheet" href="./css/findadvstyle.css">
 </head>
 
+<% var specialities = ["criminal", "family", "Business", "womensRights", "General", "Other"] %>
+
 <div class="container-fluid">
   <div class="row">
     <!-- Left Side -->
@@ -9,32 +11,48 @@
       <!-- Card for Left Col -->
       <div class="card" id="leftCard">
         <p id="filter">Filter Options</p>
+
         <!-- CityDropdown -->
         <label id="City">City:</label>
         <select id="citydropdown">
-          <option>...</option>
-          <option id="mumbai">Mumbai</option>
-          <option id="delhi">Delhi</option>
-          <option id="bangalore">Bangalore</option>
-          <option id="pune">Pune</option>
-          <option id="ahemdabad">Ahemdabad</option>
-          <option id="gujarat">Gujarat</option>
+
+          <% if (city != "") { %>
+          <option><%= city %> </option>
+          <% } %>
+
+          <% foundLawyers.forEach(element => { %>
+          <% if (element.city != city) { %>
+          <option id="<%= element.city %> "><%= element.city %> </option>
+          <% } %>
+          <% }) %>
         </select>
+
         <!--  Experience -->
-        <label id="Experience">Experience:</label>
+        <label id="Speciality">Speciality:</label>
         <select id="expdropdown">
-          <option>...</option>
-          <option>Below 5 yrs</option>
-          <option>Between 5-10 yrs</option>
-          <option>Between 10-15 yrs</option>
-          <option>Above 15+ yrs</option>
+
+          <% if (speciality != "") { %>
+          <option><%= speciality %> </option>
+          <% } %>
+
+          <% specialities.forEach(element => { %>
+          <% if (element != speciality) { %>
+          <option><%= element %> </option>
+          <% } %>
+          <% }) %>
         </select>
+
+        <button type="submit" class="btn btn-sm btn-primary applyFilter" onclick="$ec.applyFilter();">Apply
+          Filter</button>
       </div>
 
     </div>
 
     <!-- Right Side -->
     <div class="col-12 col-sm-7">
+      <% if (foundFilteredLawyers !== "" && foundFilteredLawyers.length === 0) { %>
+      <h4 style="text-align: center; color: red;">Lawyer Not Found</h4>
+      <% } else if (foundFilteredLawyers === "") { %>
       <% foundLawyers.forEach(function (lawyer) { %>
       <div class="card rightCard" id="">
         <div class="card-header">
@@ -65,6 +83,38 @@
         </div>
       </div>
       <% }) %>
+      <% } else if (foundFilteredLawyers) { %>
+      <% foundFilteredLawyers.forEach(function (lawyer) { %>
+      <div class="card rightCard" id="">
+        <div class="card-header">
+          <p id="headerName">Advocate <%= lawyer.fullname %></p>&nbsp;<i class="fa fa-check-circle" aria-hidden="true"
+            style="color: blue;"></i>
+          <p id="viewprofile"><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;View Profile</p>
+        </div>
+        <div class="card-body">
+          <img src="<%= lawyer.photoUrl %>" alt="ritesh" id="personimage">
+
+          <div class="card" id="innercard">
+            <p><i class="fa fa-university" aria-hidden="true"></i>&nbsp;&nbsp;Supreme Court,High Court</p>
+            <p><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp;<%= lawyer.city %></p>
+            <p><i class="fa fa-tags" aria-hidden="true"></i>&nbsp;&nbsp;Speciality
+
+              <% lawyer.speciality.forEach(item => { %>
+            <p style="display: inline;"><%= item %>, </p>
+            <% }); %>
+            </p>
+            <p><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;&nbsp;<button type="button" class="btn btn-primary"
+                style="background-color: #983454" data-toggle="modal" data-target="#bookAppointmentModal"
+                onclick="$ec.toggleModal('<%= lawyer._id %>');">Book An
+                Appointment</button>
+            </p>
+
+          </div>
+
+        </div>
+      </div>
+      <% }) %>
+      <% } %>
 
 
 

@@ -41,7 +41,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors());
 
-mongoose.connect("mongodb://localhost:27017/ecourtDB", {
+mongoose.connect("mongodb+srv://admin-ritik:Ritik@21@cluster0-ase9w.mongodb.net/ecourtDB", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

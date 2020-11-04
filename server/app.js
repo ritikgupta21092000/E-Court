@@ -308,7 +308,7 @@ app.get("/getUserDetails", (req, res) => {
     } else {
       res.send({ foundUser });
     }
-  })
+  });
 });
 
 app.post("/signup", function (req, res) {
@@ -651,6 +651,47 @@ app.post("/applyFilter", (req, res) => {
       });
     }
   });
+});
+
+app.post("/userForgotPassword", (req, res) => {
+  var emailId = req.body.userEmailId;
+  User.findOne({ username: emailId }, (error, foundUser) => {
+    if (error) {
+      console.log(error);
+    } else {
+      if (foundUser) {
+        otp = "";
+        for (let i = 0; i < 6; i++) {
+          otp += Math.floor(Math.random() * 10);
+        }
+        req.session.otp = otp;
+        var mailOptions = {
+          from: process.env.EMAIL_ID,
+          to: foundUser.username,
+          subject: "Password Reset OTP",
+          html: "Dear User,<br>Your Username is: " + emailId + "<br>OTP is: " + otp + ".<br>Kindly Update your password using this OTP.<br>With Regards,<br>E-Court"
+        };
+        transporter.sendMail(mailOptions, (err, info) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send({ success: true });
+          }
+        });
+      } else {
+        res.send({ success: false });
+      }
+    }
+  });
+});
+
+app.post("/verifyOtp", (req, res) => {
+  var otp = req.body.otp;
+  if (otp == req.session.otp) {
+    console.log("OTP Verifies");
+  } else {
+    console.log("Incorrect OTP");
+  }
 });
 
 app.listen(5000, () => {

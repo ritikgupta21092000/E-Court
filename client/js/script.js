@@ -79,7 +79,9 @@
     if (ec.username) {
       showLoadingSpinner();
       $ajaxUtils.sendGetRequest(userDashboardHtml, responseHandler);
-      $ajaxUtils.sendGetRequest(userDashboardFrontHtml, dashboardHandler);
+      setTimeout(() => {
+        $ajaxUtils.sendGetRequest(userDashboardFrontHtml, dashboardHandler);
+      }, 200);
       fetch(serverUrl + "getRunningCases", {
         method: "get"
       })
@@ -252,42 +254,6 @@
         console.log(error);
       });
   }
-
-  $("#login").click(function (e) {
-    e.preventDefault();
-    var data = {};
-    data.username = $("#username").val();
-    data.password = $("#password").val();
-
-    $.ajax({
-      type: "POST",
-      data: JSON.stringify(data),
-      contentType: "application/json",
-      url: serverUrl + "login",
-      success: function (data) {
-        console.log(data);
-        if (data.success == false) {
-          console.log(data.success);
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong!",
-            footer: "<a href>Why do I have this issue?</a>",
-          });
-        } else if (data.user.admin === true) {
-          location.replace(adminPanelUrl);
-        } else if (data.user.admin === false) {
-          Swal.fire(
-            "LoggedIn Successfully!",
-            "You clicked the button!",
-            "success"
-          );
-          $(".trigger-class a.nav-link").text(data.user.username);
-          $(".trigger-class").removeClass("manipulated-text");
-        }
-      },
-    });
-  });
 
   ec.authentication = function () {
     showLoadingSpinner();
@@ -657,6 +623,58 @@
       .then(res => res.text())
       .then(data => {
         insertHtml("#main-content", data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  ec.forgotUserPassword = function () {
+    var data = {
+      userEmailId: document.getElementsByClassName("forgotPasswordEmailId")[0].value
+    };
+    fetch(serverUrl + "userForgotPassword", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          Swal.fire({
+            title: "Enter OTP sent to your EmailId",
+            input: "text",
+            inputAttributes: {
+              autocapitalize: "off"
+            },
+            showCancelButton: true,
+            confirmButtonText: "Submit",
+            showLoaderOnConfirm: true,
+            preConfirm: (otp) => {
+              fetch(serverUrl + "verifyOtp", {
+                method: "post",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ otp })
+              })
+                .then(res => res.json())
+                .then((result) => {
+                  console.log(result);
+                }).catch((err) => {
+                  console.log(err);
+                });
+            }
+          })
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "User Doesn't Exists!",
+          });
+        }
       })
       .catch(error => {
         console.log(error);

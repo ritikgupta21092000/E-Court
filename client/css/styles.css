@@ -79,8 +79,8 @@ body {
   border-bottom: 2px solid pink;
 } */
 
-.card-1 {
-  height: auto;
+.card-1 .card{
+  height: 297px;
   position: absolute;
   left: 19.5%;
   bottom: -150px;

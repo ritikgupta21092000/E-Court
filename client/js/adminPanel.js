@@ -127,7 +127,11 @@
       url: serverUrl + "registerCase",
       data: data,
       success: function (response) {
-        alert("Added Lawyer Successfully");
+        Swal.fire(
+          "Added Case Successfully",
+          "Click the below Button",
+          "success"
+        );
         admin.loadFrontPage();
       }
     });
@@ -264,13 +268,13 @@
     fetch(serverUrl + "lawyerApprovedCases", {
       method: "get"
     })
-    .then(res => res.text())
-    .then(data => {
-      insertHtml("#admin-content", data);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+      .then(res => res.text())
+      .then(data => {
+        insertHtml("#admin-content", data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   function responseHandler(responseText) {

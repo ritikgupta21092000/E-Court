@@ -26,6 +26,8 @@ const UserAppointment = require("./models/registerCase");
 var lawyerUsername = "";
 var appelantId = "";
 var defendantId = "";
+var otp = "";
+var resetPasswordUserId = "";
 
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
@@ -171,6 +173,46 @@ app.get("/getClosedCases", function (req, res) {
     })
     .catch((error) => {
       console.log(error);
+    });
+});
+
+app.get("/lawyerGetRunningCases", (req, res) => {
+  var lawyerId = sess.lawyerId;
+  var count = 0;
+  Case.find({ status: "Ongoing" })
+    .populate("appelant")
+    .populate("defendant")
+    .then(foundAllCases => {
+      foundAllCases.forEach(element => {
+        if (String(element.appelant.lawyerId) == String(lawyerId) || String(element.defendant.lawyerId) == String(lawyerId)) {
+          count += 1;
+        } else {
+        }
+      });
+      res.send({ lawyerOngoingCases: count });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
+app.get("/lawyerGetClosedCases", (req, res) => {
+  var lawyerId = sess.lawyerId;
+  var count = 0;
+  Case.find({ status: "Closed" })
+    .populate("appelant")
+    .populate("defendant")
+    .then(foundAllCases => {
+      foundAllCases.forEach(element => {
+        if (String(element.appelant.lawyerId) == String(lawyerId) || String(element.defendant.lawyerId) == String(lawyerId)) {
+          count += 1;
+        } else {
+        }
+      });
+      res.send({ lawyerClosedCases: count });
+    })
+    .catch(err => {
+      console.log(err);
     });
 });
 
@@ -660,11 +702,10 @@ app.post("/userForgotPassword", (req, res) => {
       console.log(error);
     } else {
       if (foundUser) {
-        otp = "";
         for (let i = 0; i < 6; i++) {
           otp += Math.floor(Math.random() * 10);
         }
-        req.session.otp = otp;
+        resetPasswordUserId = foundUser._id;
         var mailOptions = {
           from: process.env.EMAIL_ID,
           to: foundUser.username,
@@ -686,12 +727,26 @@ app.post("/userForgotPassword", (req, res) => {
 });
 
 app.post("/verifyOtp", (req, res) => {
-  var otp = req.body.otp;
-  if (otp == req.session.otp) {
-    console.log("OTP Verifies");
+  var recievedOTP = req.body.otp;
+  if (otp == recievedOTP) {
+    res.send({ verified: true });
   } else {
-    console.log("Incorrect OTP");
+    res.send({ verified: false });
   }
+});
+
+app.post("/resetPassword", (req, res) => {
+  var confirmPassword = req.body.confirmPassword;
+  User.findById(new ObjectId(resetPasswordUserId), (error, foundUser) => {
+    foundUser.setPassword(confirmPassword, (err, user) => {
+      if (err) {
+        console.log(err);
+      } else {
+        foundUser.save();
+        res.send({ success: true });
+      }
+    })
+  })
 });
 
 app.listen(5000, () => {

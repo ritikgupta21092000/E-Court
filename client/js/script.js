@@ -11,6 +11,7 @@
   var privacyPolicyHtml = "snippets/privacyPolicy-snippet.html";
   var lawyerDashboardHtml = "snippets/lawyerDashboard-snippet.html";
   var lawyerDashboardFrontHtml = "snippets/lawyerDashboard-front-snippet.html";
+  var forgotPasswordHtml = "snippets/forgotPassword.html";
 
   var adminPanelUrl = "http://localhost:3000/client/adminPanel.html";
   var serverUrl = "http://localhost:5000/";
@@ -107,7 +108,8 @@
       $ajaxUtils.sendGetRequest(lawyerDashboardHtml, responseHandler);
       setTimeout(() => {
         $ajaxUtils.sendGetRequest(lawyerDashboardFrontHtml, lawyerDashboardHandler);
-      }, 300);
+      }, 100);
+      ec.getLawyerFrontDashboardStatus();
     } else {
       Swal.fire("Please Login First");
       $ajaxUtils.sendGetRequest(homeHtml, responseHandler);
@@ -135,6 +137,32 @@
       })
       .catch(error => {
         console.log(error);
+      });
+  }
+
+  ec.lawyerCaseStatus = function () {
+    $ajaxUtils.sendGetRequest(lawyerDashboardFrontHtml, lawyerDashboardHandler);
+    ec.getLawyerFrontDashboardStatus();
+  }
+
+  ec.getLawyerFrontDashboardStatus = () => {
+    fetch(serverUrl + "lawyerGetRunningCases", {
+      method: "get"
+    })
+      .then(res => res.json())
+      .then((result) => {
+        document.getElementsByClassName("lawyerRunningCases")[0].innerHTML = result.lawyerOngoingCases;
+      }).catch((err) => {
+        console.log(err);
+      });
+    fetch(serverUrl + "lawyerGetClosedCases", {
+      method: "get"
+    })
+      .then(res => res.json())
+      .then((result) => {
+        document.getElementsByClassName("lawyerPreviousCases")[0].innerHTML = result.lawyerClosedCases;
+      }).catch((err) => {
+        console.log(err);
       });
   }
 
@@ -425,6 +453,8 @@
       .then(data => {
         if (data.foundLawyer) {
           ec.lawyerUsername = data.foundLawyer.username;
+          $(".manipulated-text a.nav-link").text(ec.lawyerUsername);
+          $(".manipulated-text").removeClass("manipulated-text");
           ec.loadUserDashboard();
         } else {
           Swal.fire({
@@ -662,7 +692,15 @@
               })
                 .then(res => res.json())
                 .then((result) => {
-                  console.log(result);
+                  if (result.verified == true) {
+                    $ajaxUtils.sendGetRequest(forgotPasswordHtml, responseHandler);
+                  } else if (result.verified == false) {
+                    Swal.fire({
+                      icon: "error",
+                      title: "Oops...",
+                      text: "Incorrect OTP!",
+                    });
+                  }
                 }).catch((err) => {
                   console.log(err);
                 });
@@ -679,6 +717,42 @@
       .catch(error => {
         console.log(error);
       });
+  }
+
+  ec.resetPassword = function () {
+    var data = {
+      password: document.getElementsByClassName("password")[0].value,
+      confirmPassword: document.getElementsByClassName("confirmPassword")[0].value
+    };
+    if (data.password == data.confirmPassword) {
+      fetch(serverUrl + "resetPassword", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success == true) {
+            Swal.fire(
+              "Password Changed Successfully",
+              "Click the below Button",
+              "success"
+            );
+            ec.authentication();
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Password and Confirm Password Must be Same!",
+      });
+    }
   }
 
   function responseHandler(responseText) {

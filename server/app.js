@@ -58,6 +58,8 @@ passport.deserializeUser(function (id, done) {
   });
 });
 
+mongoose.set('useFindAndModify', false);
+
 var transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -525,6 +527,134 @@ app.post("/registerCase", function (req, res) {
     }
   });
 });
+
+app.post("/getAppelantDetails", function (req, res) {
+  Case.findOne({ _id: req.body.case_id }, function (err, foundCase) {
+    if (err) {
+      console.log(err);
+    } else {
+      if (foundCase) {
+        appelantId = foundCase.appelant;
+        Appelant.findOne({_id:appelantId},function(err,foundAppelant){
+          if(err){
+            console.log(err);
+          }else{
+            if(foundAppelant){
+              Lawyers.findOne({_id:foundAppelant.lawyerId},function(err,foundLawyer){
+                if(err){
+                  console.log(err);
+                }else{
+                  if(foundLawyer){
+                    res.send({ fullname: foundAppelant.fullname,address:foundAppelant.address,
+                          a_username:foundAppelant.username, l_username:foundLawyer.username,
+                          l_id:foundAppelant.lawyerId });
+                  }
+                }
+              })   
+            }
+          }
+        })
+      } else {
+        res.send({ fullname: "",address:"",
+                  a_username:"", l_username:"",
+                  l_id:"" });
+      }
+    }
+  });
+
+
+});
+
+app.post("/getDefendantDetails", function (req, res) {
+
+  Appelant.findOneAndUpdate({_id:appelantId},{$set:{address:req.body.address,lawyerId:req.body.lawyerId}}).exec(function(err,updatedAppelant){
+    if(err){
+      console.log(err);
+    }
+    else{
+      Case.findOne({ _id: req.body.case_id }, function (err, foundCase) {
+        if (err) {
+          console.log(err);
+        } else {
+          if (foundCase) {
+            defendantId = foundCase.defendant;
+            Defendant.findOne({_id:defendantId},function(err,foundDefendant){
+              if(err){
+                console.log(err);
+              }else{
+                if(foundDefendant){
+                  Lawyers.findOne({_id:foundDefendant.lawyerId},function(err,foundLawyer){
+                    if(err){
+                      console.log(err);
+                    }else{
+                      if(foundLawyer){
+                        res.send({ fullname: foundDefendant.fullname,address:foundDefendant.address,
+                              d_username:foundDefendant.username, l_username:foundLawyer.username,
+                              l_id:foundDefendant.lawyerId });
+                      }
+                    }
+                  })   
+                }
+              }
+            })
+          } else {
+            res.send({ fullname: "",address:"",
+                      d_username:"", l_username:"",
+                      l_id:"" });
+          }
+        }
+      });
+    }  
+  });
+
+});
+
+
+app.post("/getCaseDetails", function (req, res) {
+    Defendant.findOneAndUpdate({_id:defendantId},{$set:{address:req.body.address,lawyerId:req.body.lawyerId}}).exec(function(err,updatedDefendant){
+    if(err){
+      console.log(err);
+    }
+    else{
+      Case.findOne({ _id: req.body.case_id }, function (err, foundCase) {
+        if (err) {
+          console.log(err);
+        } else {
+          if (foundCase) {
+            res.send({complaint:foundCase.complaint,dateOfComplaint:foundCase.dateOfComplaint,
+                      codes:foundCase.codes, status:foundCase.status, 
+                      lastCourtOfHearing:foundCase.lastCourtOfHearing,nextCourtOfHearing : foundCase.nextCourtOfHearing,
+                      lastDateOfHearing:foundCase.lastDateOfHearing,nextDateOfHearing : foundCase.nextDateOfHearing
+                    })
+
+          } else {
+            res.send({ fullname: "",address:"",
+                      d_username:"", l_username:"",
+                      l_id:"" });
+          }
+        }
+      });
+    }  
+  });
+  
+});
+
+app.post("/updateCase", function (req, res) {
+    Case.findOneAndUpdate({_id:req.body.case_id},{$set:{complaint:req.body.complaint,codes:req.body.codes,
+                          status:req.body.status,lastCourtOfHearing:req.body.lastCourtOfHearing,
+                          nextCourtOfHearing:req.body.nextCourtOfHearing,lastDateOfHearing:req.body.lastDateOfHearing,
+                          nextDateOfHearing:req.body.nextDateOfHearing}}).exec(function(err,updatedCase){
+    if(err){
+      console.log(err);
+    }
+    else{
+      res.send({ updatedCase });
+    }  
+  });
+  
+});
+
+
 
 app.post("/userAppointment", function (req, res) {
   var lawyerId = new ObjectId(req.body.lawyerId);

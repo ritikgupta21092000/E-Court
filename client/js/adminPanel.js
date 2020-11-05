@@ -5,9 +5,14 @@
   var addCaseStatusDefendantForm = "snippets/addCaseStatus-Defendant.html";
   var addCaseForm = "snippets/addCaseStatus-Case.html";
 
+  var updateCaseStatusAppelantForm = "snippets/updateCaseStatus-Appelant.html";
+  var updateCaseStatusDefendantForm = "snippets/updateCaseStatus-Defendant.html";
+  var updateCaseForm = "snippets/updateCaseStatus-Case.html";
+
   var clientUrl = "http://localhost:3000/client/index.html";
   var serverUrl = "http://localhost:5000/";
 
+  var case_id = "";
   admin.lawyerUsername = "";
 
   function insertHtml(selector, html) {
@@ -127,7 +132,7 @@
       url: serverUrl + "registerCase",
       data: data,
       success: function (response) {
-        alert("Added Lawyer Successfully");
+        alert("Added Case Successfully");
         admin.loadFrontPage();
       }
     });
@@ -158,8 +163,129 @@
   }
 
   admin.updateCaseStatusAppelant = function () {
-    console.log("Inside of updateCaseStatusAppelant");
+    case_id = prompt("Enter Case ID");
+    var data = {
+      case_id : case_id
+    };
+    // console.log(case_id);
+    setTimeout(function () {
+      $.ajax({
+        type: "post",
+        url: serverUrl + "getAppelantDetails",
+        data: data,
+        success: function (response) {
+          $ajaxUtils.sendGetRequest(updateCaseStatusAppelantForm, responseHandler);
+          setTimeout(function(){
+            document.getElementsByClassName("fullName")[0].value=response.fullname;
+            document.getElementsByClassName("fullName")[0].disabled=true;
+            document.getElementsByClassName("address")[0].value=response.address;
+            document.getElementsByClassName("username")[0].value=response.a_username;
+            document.getElementsByClassName("username")[0].disabled=true;
+            document.getElementsByClassName("lawyerUsername")[0].value=response.l_username;
+            document.getElementsByClassName("lawyerId")[0].value=response.l_id;
+            document.getElementsByClassName("lawyerId")[0].disabled=true;
+          },200);
+          
+        }
+      });
+    });
+
   }
+
+  admin.updateCaseStatusDefendant = function () {
+    var data = {
+      address :$(".address").val(),
+      lawyerId: $(".lawyerId").val(),
+      case_id : case_id
+    }
+    showLoadingSpinner();
+    // setTimeout(function () {
+      $.ajax({
+        type: "post",
+        url: serverUrl + "getDefendantDetails",
+        data: data,
+        success: function (response) {
+          $ajaxUtils.sendGetRequest(updateCaseStatusDefendantForm, responseHandler);
+          setTimeout(function(){
+            document.getElementsByClassName("fullName")[0].value=response.fullname;
+            document.getElementsByClassName("fullName")[0].disabled=true;
+            document.getElementsByClassName("address")[0].value=response.address;
+            document.getElementsByClassName("username")[0].value=response.d_username;
+            document.getElementsByClassName("username")[0].disabled=true;
+            document.getElementsByClassName("lawyerUsername")[0].value=response.l_username;
+            document.getElementsByClassName("lawyerId")[0].value=response.l_id;
+            document.getElementsByClassName("lawyerId")[0].disabled=true;
+          },200);
+        }
+      });
+    // });
+  }
+
+  admin.updateCase = function () {
+    var data = {
+      address :$(".address").val(),
+      lawyerId: $(".lawyerId").val(),
+      case_id : case_id
+    }
+    showLoadingSpinner();
+    // setTimeout(function () {
+      $.ajax({
+        type: "post",
+        url: serverUrl + "getCaseDetails",
+        data: data,
+        success: function (response) {
+          $ajaxUtils.sendGetRequest(updateCaseForm, responseHandler);
+          setTimeout(function(){
+            document.getElementsByClassName("complaint")[0].value=response.complaint;
+            document.getElementsByClassName("dateOfComplaint")[0].value=response.dateOfComplaint;
+            document.getElementsByClassName("dateOfComplaint")[0].disabled=true;
+            document.getElementsByClassName("codes")[0].value=response.codes;
+            status = response.status;
+            if(status=="Ongoing")
+            {
+              document.getElementById("Ongoing").checked=true;
+            }
+            else
+            {
+              document.getElementById("Closed").checked=true;
+            }
+            document.getElementsByClassName("lastCourtOfHearing")[0].value=response.lastCourtOfHearing;
+            document.getElementsByClassName("nextCourtOfHearing")[0].value=response.nextCourtOfHearing;
+            document.getElementsByClassName("lastDateOfHearing")[0].value=response.lastDateOfHearing;
+            document.getElementsByClassName("nextDateOfHearing")[0].value=response.nextDateOfHearing;
+          },200);
+        }
+      });
+    // });
+    
+  }
+
+  admin.registerUpdateCase = function () {
+    var codes = document.getElementsByClassName("codes")[0].value.split(" ");
+    var data = {
+      complaint: document.getElementsByClassName("complaint")[0].value,
+      codes: codes,
+      status: document.querySelector('input[name="status"]:checked').value,
+      lastCourtOfHearing: document.getElementsByClassName("lastCourtOfHearing")[0].value,
+      nextCourtOfHearing: document.getElementsByClassName("nextCourtOfHearing")[0].value,
+      lastDateOfHearing: document.getElementsByClassName("lastDateOfHearing")[0].value,
+      nextDateOfHearing: document.getElementsByClassName("nextDateOfHearing")[0].value,
+      case_id : case_id
+    };
+    showLoadingSpinner();
+    $.ajax({
+      type: "post",
+      url: serverUrl + "updateCase",
+      data: data,
+      success: function (response) {
+        alert("Updated Case Successfully");
+        admin.loadFrontPage();
+      }
+    });
+    
+  }
+
+
 
   admin.viewAllLawyers = function () {
     showLoadingSpinner();

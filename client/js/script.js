@@ -9,7 +9,7 @@
   var addLawyerProfessionalForm = "snippets/addLawyer-Professional.html";
   var userDashboardFrontHtml = "snippets/user-dashboard-front.html";
   var privacyPolicyHtml = "snippets/privacyPolicy-snippet.html";
-  var lawyerDashboardHtml = "snippets/lawyerDashboard-snippet.html";
+  var lawyerDashboardHtml = "snippets/lawyerdashboard-snippet.html";
   var lawyerDashboardFrontHtml = "snippets/lawyerDashboard-front-snippet.html";
   var forgotPasswordHtml = "snippets/forgotPassword.html";
 

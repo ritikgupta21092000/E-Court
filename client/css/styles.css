@@ -10,6 +10,14 @@ body {
   display: none;
 }
 
+.toggleDashboardOption {
+  display: none;
+}
+
+.toggleSignIn {
+  display: none;
+}
+
 .navbar-dark {
   background-color: #1e90ff;
 }
@@ -79,7 +87,7 @@ body {
   border-bottom: 2px solid pink;
 } */
 
-.card-1 .card{
+.card-1 .card {
   height: 297px;
   position: absolute;
   left: 19.5%;

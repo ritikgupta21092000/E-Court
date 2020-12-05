@@ -276,6 +276,9 @@
           );
           $(".manipulated-text a.nav-link").text(data.user.username);
           $(".manipulated-text").removeClass("manipulated-text");
+          $(".toggleDashboardOption").removeClass("toggleDashboardOption");
+          $(".trigger-signin").addClass("toggleDashboardOption");
+          ec.loadUserDashboard();
         }
       })
       .catch((error) => {
@@ -299,6 +302,8 @@
           ec.username = "";
           $(".trigger-class a.nav-link").text("");
           $(".trigger-class").addClass("manipulated-text");
+          $(".trigger-dashboard-option").addClass("toggleDashboardOption");
+          $(".trigger-signin").removeClass("toggleDashboardOption");
           Swal.fire(
             "Logged Out Successfully!",
             "You clicked the button!",
@@ -455,6 +460,8 @@
           ec.lawyerUsername = data.foundLawyer.username;
           $(".manipulated-text a.nav-link").text(ec.lawyerUsername);
           $(".manipulated-text").removeClass("manipulated-text");
+          $(".toggleDashboardOption").removeClass("toggleDashboardOption");
+          $(".trigger-signin").addClass("toggleDashboardOption");
           ec.loadUserDashboard();
         } else {
           Swal.fire({

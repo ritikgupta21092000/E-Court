@@ -46,13 +46,14 @@
               data-toggle="dropdown">Services</a>
             <div class="dropdown-menu">
               <a href="#" onclick="$ec.allLaws();" class="dropdown-item">All Laws</a>
-              <a href="#" onclick="$ec.loadAdvocatePage();" class="dropdown-item">Search Lawyer</a>
+              <a href="#" onclick="$ec.loadAdvocatePage();"
+                class="dropdown-item toggleDashboardOption trigger-dashboard-option">Search Lawyer</a>
             </div>
           </li>
-          <li class="nav-item">
+          <li class="nav-item toggleDashboardOption trigger-dashboard-option">
             <a href="#" onclick="$ec.loadUserDashboard();" class="nav-link">Dashboard</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item trigger-signin">
             <!-- <a href="#" data-toggle="modal" data-target="#loginModal" class="nav-link">SignIn/SignUp</a> -->
             <a href="#" onclick="$ec.authentication();" class="nav-link">SignIn/SignUp</a>
           </li>

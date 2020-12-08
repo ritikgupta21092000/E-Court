@@ -11,7 +11,8 @@
 
 
   var clientUrl = "http://localhost:3000/client/index.html";
-  var serverUrl = "http://localhost:5000/";
+  // var serverUrl = "http://localhost:5000/";
+  var serverUrl = "https://mysterious-castle-46911.herokuapp.com/";
 
   admin.lawyerUsername = "";
   var case_id = "";

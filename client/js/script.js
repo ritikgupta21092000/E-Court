@@ -14,7 +14,8 @@
   var forgotPasswordHtml = "snippets/forgotPassword.html";
 
   var adminPanelUrl = "http://localhost:3000/client/adminPanel.html";
-  var serverUrl = "http://localhost:5000/";
+  // var serverUrl = "http://localhost:5000/";
+  var serverUrl = "https://mysterious-castle-46911.herokuapp.com/";
 
   ec.lawyerId = "";
   ec.username = "";

@@ -227,6 +227,7 @@
       url: serverUrl + "logout",
       success: function (data) {
         if (data.logout) {
+          sessionStorage.removeItem("admin");
           $(".trigger-class a.nav-link").text("");
           $(".trigger-class").addClass("manipulated-text");
           location.replace(clientUrl);

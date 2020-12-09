@@ -267,6 +267,7 @@
             footer: "<a href>Why do I have this issue?</a>",
           });
         } else if (data.user.admin === true) {
+          sessionStorage.setItem("admin", true);
           location.replace(adminPanelUrl);
         } else if (data.user.admin === false) {
           ec.username = data.user.username;

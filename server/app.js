@@ -13,6 +13,13 @@ const nodemailer = require("nodemailer");
 var generator = require("generate-password");
 const cors = require("cors");
 const laws = require("./laws.json");
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET
+});
 
 const app = express();
 
@@ -33,7 +40,9 @@ app.set("view engine", "ejs");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../client/index.html")));
-app.use(fileupload());
+app.use(fileupload({
+  useTempFiles: true
+}));
 app.use(session({
   secret: process.env.SECRET,
   resave: false,
@@ -438,15 +447,15 @@ app.post('/saveImage', (req, res) => {
   var certificateFolderPath = path.join(__dirname, "../client/images/lawyerCertificate/" + certificateFileName);
   var photoUrl = "./images/lawyerPhoto/" + fileName;
   var certificateUrl = "./images/lawyerCertificate/" + certificateFileName;
-  image.mv(folderPath, function (err) {
+  cloudinary.uploader.upload(image.tempFilePath, function (err, result) {
     if (err) {
-      console.log(err);
+      console.log(err)
     } else {
-      certificate.mv(certificateFolderPath, function (err) {
-        if (err) {
-          console.log(err);
+      cloudinary.uploader.upload(certificate.tempFilePath, function (error, certificateUrl) {
+        if (error) {
+          console.log(error)
         } else {
-          Lawyers.updateOne({ username: lawyerUsername }, { $set: { photoUrl: photoUrl, degreePhotoUrl: certificateUrl } }, function (err, result) {
+          Lawyers.updateOne({ username: lawyerUsername }, { $set: { photoUrl: result.secure_url, degreePhotoUrl: certificateUrl.secure_url } }, function (err, result) {
             if (err) {
               console.log(err);
             } else {
@@ -454,7 +463,7 @@ app.post('/saveImage', (req, res) => {
             }
           });
         }
-      });
+      })
     }
   });
 });
